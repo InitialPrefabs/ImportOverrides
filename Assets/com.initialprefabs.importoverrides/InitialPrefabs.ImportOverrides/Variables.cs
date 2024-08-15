@@ -1,0 +1,66 @@
+// Code generated, do not modify
+namespace InitialPrefabs.ImportOverrides {
+    public static class Variables {
+        public static readonly string m_Alignment = nameof(m_Alignment);
+        public static readonly string m_AlphaIsTransparency = nameof(m_AlphaIsTransparency);
+        public static readonly string m_AlphaSource = nameof(m_AlphaSource);
+        public static readonly string m_AlphaTestReferenceValue = nameof(m_AlphaTestReferenceValue);
+        public static readonly string m_Aniso = nameof(m_Aniso);
+        public static readonly string m_ApplyGammaDecoding = nameof(m_ApplyGammaDecoding);
+        public static readonly string m_BorderMipMap = nameof(m_BorderMipMap);
+        public static readonly string m_CompressionQuality = nameof(m_CompressionQuality);
+        public static readonly string m_CompressionQualitySet = nameof(m_CompressionQualitySet);
+        public static readonly string m_ConvertToNormalMap = nameof(m_ConvertToNormalMap);
+        public static readonly string m_CookieMode = nameof(m_CookieMode);
+        public static readonly string m_CubemapConvolution = nameof(m_CubemapConvolution);
+        public static readonly string m_CubemapConvolutionExponent = nameof(m_CubemapConvolutionExponent);
+        public static readonly string m_CubemapConvolutionSteps = nameof(m_CubemapConvolutionSteps);
+        public static readonly string m_EnableMipMap = nameof(m_EnableMipMap);
+        public static readonly string m_FadeOut = nameof(m_FadeOut);
+        public static readonly string m_FilterMode = nameof(m_FilterMode);
+        public static readonly string m_FlipbookColumns = nameof(m_FlipbookColumns);
+        public static readonly string m_FlipbookRows = nameof(m_FlipbookRows);
+        public static readonly string m_FlipGreenChannel = nameof(m_FlipGreenChannel);
+        public static readonly string m_GenerateCubemap = nameof(m_GenerateCubemap);
+        public static readonly string m_GrayScaleToAlpha = nameof(m_GrayScaleToAlpha);
+        public static readonly string m_HeightScale = nameof(m_HeightScale);
+        public static readonly string m_IgnoreMipmapLimit = nameof(m_IgnoreMipmapLimit);
+        public static readonly string m_IgnorePngGamma = nameof(m_IgnorePngGamma);
+        public static readonly string m_IsReadable = nameof(m_IsReadable);
+        public static readonly string m_Lightmap = nameof(m_Lightmap);
+        public static readonly string m_LinearTexture = nameof(m_LinearTexture);
+        public static readonly string m_MaxTextureSize = nameof(m_MaxTextureSize);
+        public static readonly string m_MaxTextureSizeSet = nameof(m_MaxTextureSizeSet);
+        public static readonly string m_MipBias = nameof(m_MipBias);
+        public static readonly string m_MipMapFadeDistanceEnd = nameof(m_MipMapFadeDistanceEnd);
+        public static readonly string m_MipMapFadeDistanceStart = nameof(m_MipMapFadeDistanceStart);
+        public static readonly string m_MipMapMode = nameof(m_MipMapMode);
+        public static readonly string m_MipMapsPreserveCoverage = nameof(m_MipMapsPreserveCoverage);
+        public static readonly string m_NormalMap = nameof(m_NormalMap);
+        public static readonly string m_NormalMapFilter = nameof(m_NormalMapFilter);
+        public static readonly string m_NPOTScale = nameof(m_NPOTScale);
+        public static readonly string m_RGBM = nameof(m_RGBM);
+        public static readonly string m_SeamlessCubemap = nameof(m_SeamlessCubemap);
+        public static readonly string m_SingleChannelComponent = nameof(m_SingleChannelComponent);
+        public static readonly string m_SpriteBorder = nameof(m_SpriteBorder);
+        public static readonly string m_SpriteExtrude = nameof(m_SpriteExtrude);
+        public static readonly string m_SpriteGenerateFallbackPhysicsShape = nameof(m_SpriteGenerateFallbackPhysicsShape);
+        public static readonly string m_SpriteMeshType = nameof(m_SpriteMeshType);
+        public static readonly string m_SpriteMode = nameof(m_SpriteMode);
+        public static readonly string m_SpritePivot = nameof(m_SpritePivot);
+        public static readonly string m_SpritePixelsToUnits = nameof(m_SpritePixelsToUnits);
+        public static readonly string m_SpriteTessellationDetail = nameof(m_SpriteTessellationDetail);
+        public static readonly string m_sRGBTexture = nameof(m_sRGBTexture);
+        public static readonly string m_StreamingMipmaps = nameof(m_StreamingMipmaps);
+        public static readonly string m_StreamingMipmapsPriority = nameof(m_StreamingMipmapsPriority);
+        public static readonly string m_Swizzle = nameof(m_Swizzle);
+        public static readonly string m_TextureFormat = nameof(m_TextureFormat);
+        public static readonly string m_TextureFormatSet = nameof(m_TextureFormatSet);
+        public static readonly string m_TextureShape = nameof(m_TextureShape);
+        public static readonly string m_TextureType = nameof(m_TextureType);
+        public static readonly string m_VTOnly = nameof(m_VTOnly);
+        public static readonly string m_WrapU = nameof(m_WrapU);
+        public static readonly string m_WrapV = nameof(m_WrapV);
+        public static readonly string m_WrapW = nameof(m_WrapW);
+    }
+}

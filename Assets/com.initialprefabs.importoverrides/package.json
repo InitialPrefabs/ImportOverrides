@@ -1,0 +1,23 @@
+{
+    "name": "com.initialprefabs.importoverrides",
+    "version": "1.2.3",
+    "displayName": "Import Overrides",
+    "description": "A visual GUI similar to the default importer UI for assets.",
+    "unity": "2022.3",
+    "unityRelease": "15",
+    "documentationUrl": "https://example.com/",
+    "changelogUrl": "https://example.com/changelog.html",
+    "licensesUrl": "https://example.com/licensing.html",
+    "dependencies": {
+    },
+    "keywords": [
+        "gui",
+        "editor",
+        "importer"
+    ],
+    "author": {
+        "name": "InitialPrefabs",
+        "email": "info@initialprefabs.com",
+        "url": "https://www.unity3d.com"
+    }
+}
