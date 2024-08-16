@@ -265,7 +265,7 @@ MonoBehaviour:
     m_SeamlessCubemap: 0
     m_AlphaIsTransparency: 0
     m_SpriteTessellationDetail: 0
-    m_TextureType: 2
+    m_TextureType: 11
     m_TextureShape: 1
     m_SingleChannelComponent: 0
     m_FlipbookRows: 0
