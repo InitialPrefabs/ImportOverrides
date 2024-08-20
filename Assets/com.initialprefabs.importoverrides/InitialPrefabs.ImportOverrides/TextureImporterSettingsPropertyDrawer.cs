@@ -6,6 +6,7 @@ namespace InitialPrefabs.ImportOverrides {
     [CustomPropertyDrawer(typeof(TextureImporterSettings))]
     public class TextureImporterSettingsPropertyDrawer : PropertyDrawer {
 
+        private const float kSpacingSubLabel = 4;
         private static readonly int Texture2DOnly =
             AsMask(TextureImporterType.GUI) |
             AsMask(TextureImporterType.Sprite) |
@@ -111,11 +112,85 @@ namespace InitialPrefabs.ImportOverrides {
                             var mipMapModeProp = root.FindPropertyRelative(Variables.m_MipMapMode);
                             mipMapModeProp.intValue = (int)(TextureImporterMipFilter)EditorGUILayout.EnumPopup(
                                 new GUIContent("MipmapFiltering"), (TextureImporterMipFilter)mipMapModeProp.intValue);
+
+                            var preserveCoverageProp = root.FindPropertyRelative(Variables.m_MipMapsPreserveCoverage);
+                            bool coverage = EditorGUILayout.Toggle(new GUIContent(
+                                "Preserve Coverage",
+                                "The alpha channel of generated mipmaps will preserve coverage for the alpha test. Useful for foliage textures."),
+                                preserveCoverageProp.intValue != 0);
+
+                            preserveCoverageProp.intValue = coverage ? 1 : 0;
+
+                            if (coverage) {
+                                using var _ = new IndentScope(1);
+                                EditorGUILayout.PropertyField(root.FindPropertyRelative(Variables.m_AlphaTestReferenceValue),
+                                    new GUIContent(
+                                        "Alpha Cutoff",
+                                        "The reference value used during the alpha test. Controls mipmap coverage."));
+                            }
+
+                            var replicateBorderProp = root.FindPropertyRelative(Variables.m_BorderMipMap);
+                            replicateBorderProp.intValue = EditorGUILayout.Toggle(new GUIContent(
+                                "Replicate Border",
+                                "Replicate pixel values from texture borders into smaller mipmap levels. Mostly used for Cookie texture types."),
+                                replicateBorderProp.intValue != 0) ? 1 : 0;
+
+                            var fadeoutToGrayProp = root.FindPropertyRelative(Variables.m_FadeOut);
+                            bool fadedOut = EditorGUILayout.Toggle(new GUIContent("Fadeout to Gray"), fadeoutToGrayProp.intValue != 0);
+
+                            fadeoutToGrayProp.intValue = fadedOut ? 1 : 0;
+                            if (fadedOut) {
+                                using var _ = new IndentScope(1);
+                                EditorGUI.BeginChangeCheck();
+                                var startProp = root.FindPropertyRelative(Variables.m_MipMapFadeDistanceStart);
+                                var endProp = root.FindPropertyRelative(Variables.m_MipMapFadeDistanceEnd);
+
+                                var min = (float)startProp.intValue;
+                                var max = (float)endProp.intValue;
+                                EditorGUILayout.MinMaxSlider(new GUIContent("Fade Range"), ref min, ref max, 0, 10);
+
+                                if (EditorGUI.EndChangeCheck()) {
+                                    startProp.intValue = Mathf.RoundToInt(min);
+                                    endProp.intValue = Mathf.RoundToInt(max);
+                                }
+                            }
+
+                            var ignorePngGammaProp = root.FindPropertyRelative(Variables.m_IgnorePngGamma);
+                            ignorePngGammaProp.intValue = EditorGUILayout.Toggle(new GUIContent("Ignore PNG Gamma", "Ignore the Gamma attribute in png"), ignorePngGammaProp.intValue != 0) ? 1 : 0;
+
+
                         }
                     }
                 }
             }
         }
+
+        // TODO: Do a call to this, using Reflection
+        // A label, and then four dropdown popups to pick RGBA swizzle sources.
+        // Code flow modeled similar to a Vector4Field.
+        static readonly int s_SwizzleFieldHash = "SwizzleField".GetHashCode();
+        static readonly string[] s_SwizzleOptions = new[] { "R", "G", "B", "A", "1-R", "1-G", "1-B", "1-A", "0", "1" };
+        // static uint SwizzleField(GUIContent label, uint swizzle) {
+        //     var rect = EditorGUILayout.s_LastRect = EditorGUILayout.GetControlRect(true, EditorGUI.GetPropertyHeight(SerializedPropertyType.Vector4, label), EditorStyles.numberField);
+        //     var id = GUIUtility.GetControlID(s_SwizzleFieldHash, FocusType.Keyboard, rect);
+        //     rect = EditorGUI.MultiFieldPrefixLabel(rect, id, label, 4);
+        //     rect.height = EditorGUIUtility.singleLineHeight;
+
+        //     float w = (rect.width - 3 * EditorGUIUtility.standardVerticalSpacing) / 4;
+        //     var subRect = new Rect(rect) { width = w };
+        //     var oldIndent = EditorGUI.indentLevel;
+        //     EditorGUI.indentLevel = 0;
+        //     for (int i = 0; i < 4; i++) {
+        //         int shift = 8 * i;
+        //         uint swz = (swizzle >> shift) & 0xFF;
+        //         swz = (uint)EditorGUI.Popup(subRect, (int)swz, s_SwizzleOptions);
+        //         swizzle &= ~(0xFFu << shift);
+        //         swizzle |= swz << shift;
+        //         subRect.x += w + kSpacingSubLabel;
+        //     }
+        //     EditorGUI.indentLevel = oldIndent;
+        //     return swizzle;
+        // }
 
         // TODO: For TextureImporterPlatformSettings use the BuildTargetGroup API
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {

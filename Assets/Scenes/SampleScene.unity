@@ -234,12 +234,12 @@ MonoBehaviour:
     m_AlphaSource: 1
     m_MipMapMode: 0
     m_EnableMipMap: 1
-    m_FadeOut: 0
+    m_FadeOut: 1
     m_BorderMipMap: 0
-    m_MipMapsPreserveCoverage: 0
+    m_MipMapsPreserveCoverage: 1
     m_AlphaTestReferenceValue: 0
-    m_MipMapFadeDistanceStart: 0
-    m_MipMapFadeDistanceEnd: 0
+    m_MipMapFadeDistanceStart: 2
+    m_MipMapFadeDistanceEnd: 7
     m_ConvertToNormalMap: 0
     m_HeightScale: 0
     m_NormalMapFilter: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
     m_StreamingMipmapsPriority: 0
     m_VTOnly: 0
     m_IgnoreMipmapLimit: 0
-    m_NPOTScale: 0
+    m_NPOTScale: 1
     m_sRGBTexture: 1
     m_SpriteMode: 0
     m_SpriteExtrude: 0
@@ -265,7 +265,7 @@ MonoBehaviour:
     m_SeamlessCubemap: 0
     m_AlphaIsTransparency: 0
     m_SpriteTessellationDetail: 0
-    m_TextureType: 11
+    m_TextureType: 0
     m_TextureShape: 1
     m_SingleChannelComponent: 0
     m_FlipbookRows: 0
