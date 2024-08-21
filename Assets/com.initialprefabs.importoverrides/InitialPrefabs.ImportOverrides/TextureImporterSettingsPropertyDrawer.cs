@@ -1,4 +1,7 @@
-﻿using UnityEditor;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 
 namespace InitialPrefabs.ImportOverrides {
@@ -156,44 +159,68 @@ namespace InitialPrefabs.ImportOverrides {
                             }
 
                             var ignorePngGammaProp = root.FindPropertyRelative(Variables.m_IgnorePngGamma);
-                            ignorePngGammaProp.intValue = EditorGUILayout.Toggle(new GUIContent("Ignore PNG Gamma", "Ignore the Gamma attribute in png"), ignorePngGammaProp.intValue != 0) ? 1 : 0;
+                            ignorePngGammaProp.intValue = EditorGUILayout.Toggle(
+                                new GUIContent("Ignore PNG Gamma", "Ignore the Gamma attribute in png"),
+                                ignorePngGammaProp.intValue != 0) ? 1 : 0;
 
+                            var swizzleProp = root.FindPropertyRelative(Variables.m_Swizzle);
+                            var label = new GUIContent(
+                                "Swizzle", 
+                                "Reorder and invert texture color channels. For each of R, G, B, A " + 
+                                "channel picks where the channel data comes from.");
 
+                            EditorGUI.BeginProperty(
+                                EditorGUILayout.BeginHorizontal(),
+                                label,
+                                swizzleProp);
+                            EditorGUI.BeginChangeCheck();
+
+                            EditorGUI.showMixedValue = swizzleProp.hasMultipleDifferentValues;
+                            var modifier = new ParameterModifier(2);
+                            for (int i = 0; i < 2; i++)
+                            {
+                                modifier[i] = false;
+                            }
+
+                            // TODO: Need to rewrite TextureImporterInspector's version manually.
+                            var value = ReflectionUtils.Invoke(
+                                TextureImporterInspectorType,
+                                null,
+                                "SwizzleField",
+                                BindingFlags.NonPublic | BindingFlags.Static,
+                                new [] { typeof(SerializedProperty), typeof(GUIContent) },
+                                new object[] { swizzleProp, label },
+                                new [] { modifier });
+                            EditorGUI.showMixedValue = false;
+
+                            if (EditorGUI.EndChangeCheck()) {
+                                swizzleProp.uintValue = value != null ? (uint)value : 0;
+                            }
+                            EditorGUILayout.EndHorizontal();
+                            EditorGUI.EndProperty();
                         }
                     }
                 }
             }
         }
 
-        // TODO: Do a call to this, using Reflection
-        // A label, and then four dropdown popups to pick RGBA swizzle sources.
-        // Code flow modeled similar to a Vector4Field.
-        static readonly int s_SwizzleFieldHash = "SwizzleField".GetHashCode();
-        static readonly string[] s_SwizzleOptions = new[] { "R", "G", "B", "A", "1-R", "1-G", "1-B", "1-A", "0", "1" };
-        // static uint SwizzleField(GUIContent label, uint swizzle) {
-        //     var rect = EditorGUILayout.s_LastRect = EditorGUILayout.GetControlRect(true, EditorGUI.GetPropertyHeight(SerializedPropertyType.Vector4, label), EditorStyles.numberField);
-        //     var id = GUIUtility.GetControlID(s_SwizzleFieldHash, FocusType.Keyboard, rect);
-        //     rect = EditorGUI.MultiFieldPrefixLabel(rect, id, label, 4);
-        //     rect.height = EditorGUIUtility.singleLineHeight;
+        private static Type TextureImporterInspectorType;
 
-        //     float w = (rect.width - 3 * EditorGUIUtility.standardVerticalSpacing) / 4;
-        //     var subRect = new Rect(rect) { width = w };
-        //     var oldIndent = EditorGUI.indentLevel;
-        //     EditorGUI.indentLevel = 0;
-        //     for (int i = 0; i < 4; i++) {
-        //         int shift = 8 * i;
-        //         uint swz = (swizzle >> shift) & 0xFF;
-        //         swz = (uint)EditorGUI.Popup(subRect, (int)swz, s_SwizzleOptions);
-        //         swizzle &= ~(0xFFu << shift);
-        //         swizzle |= swz << shift;
-        //         subRect.x += w + kSpacingSubLabel;
-        //     }
-        //     EditorGUI.indentLevel = oldIndent;
-        //     return swizzle;
-        // }
+        private void InitializeType() {
+            if (TextureImporterInspectorType == null) {
+                TextureImporterInspectorType = AppDomain
+                    .CurrentDomain
+                    .GetAssemblies()
+                    .FirstOrDefault(assembly => assembly.FullName.Contains("UnityEditor.CoreModule,"))
+                    .GetTypes()
+                    .FirstOrDefault(type => type.Name.Contains("TextureImporterInspector"));
+            }
+        }
 
         // TODO: For TextureImporterPlatformSettings use the BuildTargetGroup API
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+            InitializeType();
+
             EditorGUI.BeginChangeCheck();
             property.serializedObject.Update();
 
