@@ -240,23 +240,20 @@ namespace InitialPrefabs.ImportOverrides {
 
                 }
             }
-            // Wrap Mode
-            var wrapUProp = root.FindPropertyRelative(Variables.m_WrapU);
-            TextureWrapMode mode = (TextureWrapMode)EditorGUILayout.EnumPopup(new GUIContent("Wrap Mode"), (TextureWrapMode)wrapUProp.intValue);
         }
 
         // TODO: For TextureImporterPlatformSettings use the BuildTargetGroup API
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+        public override void OnGUI(Rect position, SerializedProperty root, GUIContent label) {
             EditorGUI.BeginChangeCheck();
-            property.serializedObject.Update();
+            root.serializedObject.Update();
 
-            var textureTypeProp = property.FindPropertyRelative(Variables.m_TextureType);
+            var textureTypeProp = root.FindPropertyRelative(Variables.m_TextureType);
             var textureType = (TextureImporterType)EditorGUILayout.EnumPopup(
                 new GUIContent("Texture Type"),
                 (TextureImporterType)textureTypeProp.intValue);
             textureTypeProp.intValue = (int)textureType;
 
-            var textureShapeProp = property.FindPropertyRelative(Variables.m_TextureShape);
+            var textureShapeProp = root.FindPropertyRelative(Variables.m_TextureShape);
 
             var isTexture2D = (Texture2DOnly & AsMask(textureType)) > 0;
             using (isTexture2D ? GUIScope.Disabled() : GUIScope.Enabled()) {
@@ -267,7 +264,7 @@ namespace InitialPrefabs.ImportOverrides {
 
             switch (textureType) {
                 case TextureImporterType.Default:
-                    HandleDefaultTexture(property);
+                    HandleDefaultTexture(root);
                     break;
                 case TextureImporterType.GUI:
                 case TextureImporterType.Sprite:
@@ -281,8 +278,14 @@ namespace InitialPrefabs.ImportOverrides {
                     break;
             }
 
+            // Wrap Mode
+            var wrapUProp = root.FindPropertyRelative(Variables.m_WrapU);
+            TextureWrapMode mode = (TextureWrapMode)EditorGUILayout.EnumPopup(new GUIContent("Wrap Mode"), (TextureWrapMode)wrapUProp.intValue);
+
+            // Draw the filter and aniso level
+
             if (EditorGUI.EndChangeCheck()) {
-                property.serializedObject.ApplyModifiedProperties();
+                root.serializedObject.ApplyModifiedProperties();
             }
         }
     }
