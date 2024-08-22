@@ -17,6 +17,16 @@ namespace InitialPrefabs.ImportOverrides {
             return null;
         }
 
+        public static object Invoke<T>(
+            object target, 
+            string method, 
+            BindingFlags flags, 
+            Type[] argTypes, 
+            object[] args, 
+            ParameterModifier[] paramModifiers) {
+            return Invoke(typeof(T), target, method, flags, argTypes, args, paramModifiers);
+        }
+
         public static object Invoke(
             Type type, 
             object target, 
@@ -25,8 +35,28 @@ namespace InitialPrefabs.ImportOverrides {
             Type[] argTypes, 
             object[] args, 
             ParameterModifier[] paramModifiers) {
-            var methodInfo = type.GetMethod(method, argTypes.Length, flags, null, argTypes, paramModifiers);
+
+            var methodInfo = type.GetMethod(method, flags, null, argTypes, paramModifiers);
             if (methodInfo != null) {
+                return methodInfo.Invoke(target, args);
+            }
+            return null;
+        }
+
+        public static object InvokeGeneric(
+            Type type, 
+            object target, 
+            string method, 
+            BindingFlags flags, 
+            int genericParameterCount,
+            Type[] argTypes, 
+            object[] args, 
+            ParameterModifier[] paramModifiers) {
+
+            var methodInfo = type.GetMethod(method, argTypes.Length, flags, null, argTypes, paramModifiers);
+
+            if (methodInfo != null) {
+                UnityEngine.Debug.Log("invoked");
                 return methodInfo.Invoke(target, args);
             }
             return null;
