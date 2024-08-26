@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -27,6 +28,15 @@ namespace InitialPrefabs.ImportOverrides {
         private static readonly Type[] MultiFieldPrefixLabelTypeArgs = { typeof(Rect), typeof(int), typeof(GUIContent), typeof(int) };
 
         private static readonly ParameterModifier[] Modifiers = new ParameterModifier[1];
+
+        private static readonly GUIContent[] FilterModeOptions =
+            {
+                EditorGUIUtility.TrTextContent("Point (no filter)"),
+                EditorGUIUtility.TrTextContent("Bilinear"),
+                EditorGUIUtility.TrTextContent("Trilinear")
+            };
+
+        private static readonly int[] FilterModeValues = Enum.GetValues(typeof(FilterMode)).Cast<int>().ToArray();
 
         private static int AsMask(TextureImporterType type) => 1 << (int)type;
 
@@ -237,7 +247,6 @@ namespace InitialPrefabs.ImportOverrides {
                         EditorGUILayout.EndHorizontal();
                         EditorGUI.EndProperty();
                     }
-
                 }
             }
         }
@@ -281,8 +290,17 @@ namespace InitialPrefabs.ImportOverrides {
             // Wrap Mode
             var wrapUProp = root.FindPropertyRelative(Variables.m_WrapU);
             TextureWrapMode mode = (TextureWrapMode)EditorGUILayout.EnumPopup(new GUIContent("Wrap Mode"), (TextureWrapMode)wrapUProp.intValue);
+            wrapUProp.intValue = (int)mode;
+
+            var filterModeProp = root.FindPropertyRelative(Variables.m_FilterMode);
 
             // Draw the filter and aniso level
+            EditorGUILayout.IntPopup(filterModeProp, FilterModeOptions, FilterModeValues, new GUIContent("Filter Mode"));
+
+            using (new GUIScope(filterModeProp.intValue != (int)FilterMode.Point)) {
+                var anisoProp = root.FindPropertyRelative(Variables.m_Aniso);
+                anisoProp.intValue = EditorGUILayout.IntSlider(new GUIContent("Aniso Level"), anisoProp.intValue, 0, 16);
+            }
 
             if (EditorGUI.EndChangeCheck()) {
                 root.serializedObject.ApplyModifiedProperties();
