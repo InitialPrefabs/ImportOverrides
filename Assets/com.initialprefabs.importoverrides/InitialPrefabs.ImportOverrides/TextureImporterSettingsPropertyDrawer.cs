@@ -38,6 +38,8 @@ namespace InitialPrefabs.ImportOverrides {
 
         private static readonly int[] FilterModeValues = Enum.GetValues(typeof(FilterMode)).Cast<int>().ToArray();
 
+        private static readonly Type TextureInspectorType = AppDomain.CurrentDomain.GetAssemblies().SelectMany(asm => asm.GetTypes()).FirstOrDefault(type => type.FullName.EndsWith("UnityEditor.TextureInspector"));
+
         private static int AsMask(TextureImporterType type) => 1 << (int)type;
 
         private static uint SwizzleField(GUIContent label, uint swizzle) {
@@ -251,6 +253,8 @@ namespace InitialPrefabs.ImportOverrides {
             }
         }
 
+        private bool showPerAxisWrapModes;
+
         // TODO: For TextureImporterPlatformSettings use the BuildTargetGroup API
         public override void OnGUI(Rect position, SerializedProperty root, GUIContent label) {
             EditorGUI.BeginChangeCheck();
@@ -288,6 +292,7 @@ namespace InitialPrefabs.ImportOverrides {
             }
 
             // Wrap Mode
+            // TODO: Add a per axis component with the same logic
             var wrapUProp = root.FindPropertyRelative(Variables.m_WrapU);
             TextureWrapMode mode = (TextureWrapMode)EditorGUILayout.EnumPopup(new GUIContent("Wrap Mode"), (TextureWrapMode)wrapUProp.intValue);
             wrapUProp.intValue = (int)mode;
