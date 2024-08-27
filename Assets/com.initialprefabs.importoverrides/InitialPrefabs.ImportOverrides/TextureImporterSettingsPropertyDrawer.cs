@@ -296,13 +296,9 @@ namespace InitialPrefabs.ImportOverrides {
                     break;
             }
 
-            // Wrap Mode
-            // TODO: Add a per axis component with the same logic
             var wrapUProp = root.FindPropertyRelative(Variables.m_WrapU);
             var wrapVProp = root.FindPropertyRelative(Variables.m_WrapV);
             var wrapWProp = root.FindPropertyRelative(Variables.m_WrapW);
-            // TextureWrapMode mode = (TextureWrapMode)EditorGUILayout.EnumPopup(new GUIContent("Wrap Mode"), (TextureWrapMode)wrapUProp.intValue);
-            // wrapUProp.intValue = (int)mode;
 
             WrapModePopup(wrapVProp, wrapUProp, wrapWProp, false, ref showPerAxisWrapModes, false);
 
