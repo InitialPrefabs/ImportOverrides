@@ -3,7 +3,7 @@ guid: 455add0e6aea7794b96652209525fd71
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 13
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
@@ -27,8 +27,8 @@ TextureImporter:
   vTOnly: 0
   ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
-  generateCubemap: 6
-  cubemapConvolution: 0
+  generateCubemap: 1
+  cubemapConvolution: 2
   seamlessCubemap: 0
   textureFormat: 1
   maxTextureSize: 2048

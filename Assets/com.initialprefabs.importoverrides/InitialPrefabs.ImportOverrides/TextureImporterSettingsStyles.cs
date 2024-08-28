@@ -1,0 +1,52 @@
+﻿using UnityEngine;
+
+namespace InitialPrefabs.ImportOverrides {
+    internal static class TextureImporterSettingsStyles {
+        public static readonly GUIContent ColorTexture = new GUIContent("sRGB (Color Texture");
+        public static readonly GUIContent AlphaSource = new GUIContent("Alpha Source");
+        public static readonly GUIContent AlphaIsTransparency = new GUIContent("Alpha Is Transparency");
+        public static readonly GUIContent NOP2 = new GUIContent("Non-Power of 2", "How no power of twos are scaled on import.");
+        public static readonly GUIContent ReadWrite = new GUIContent("Read/Write", "Enable access to raw pixel from code.");
+        public static readonly GUIContent VirtualTextureOnly = new GUIContent(
+            "Virtual Texture Only",
+            "Texture is optimized for use as a virtual texture and can only be used as a Virtual Texture");
+        public static readonly GUIContent GenerateMipmaps = new GUIContent("Generate Mipmaps",
+            "Create progressively smaller versions of the texture, " +
+            "for reduced texture shimmering and better GPU performance when the texture is viewed at a distance.");
+        public static readonly GUIContent MipmapLimits = new GUIContent("Use Mipmap Limits",
+            "Disable this if the number of mips to to upload should not be limited by the " +
+            "quality settings. (effectively: always upload at full resolution, regardless of " +
+            "the global mipmap limit or mipmap limit group.");
+        public static readonly GUIContent MipStreaming = new GUIContent("Mip Steaming",
+            "Only load larger mipmaps as needed to render the current game cameras. " +
+            "Required texture streaming to be enabled in quality settings.");
+        public static readonly GUIContent MipmapPriority = new GUIContent("Priority",
+            "Mipmap streaming priority when there's contention for " +
+            "resources. Positive numbers represent higher priority. Valid range is -128 to 127.");
+        public static readonly GUIContent MipmapFiltering = new GUIContent("Mipmap Filtering");
+        public static readonly GUIContent PreserveCoverage = new GUIContent(
+            "Preserve Coverage",
+            "The alpha channel of generated mipmaps will preserve coverage for the alpha test. Useful for foliage textures.");
+        public static readonly GUIContent AlphaCutoff = new GUIContent(
+            "Alpha Cutoff",
+            "The reference value used during the alpha test. Controls mipmap coverage.");
+        public static readonly GUIContent ReplicateBorder = new GUIContent(
+            "Replicate Border",
+            "Replicate pixel values from texture borders into smaller mipmap levels. Mostly used for Cookie texture types.");
+        public static readonly GUIContent FadeoutToGray = new GUIContent("Fadeout to Gray");
+        public static readonly GUIContent FadeRange = new GUIContent("Fade Range");
+        public static readonly GUIContent IgnorePNGGamma = new GUIContent("Ignore PNG Gamma", "Ignore the Gamma attribute in png");
+        public static readonly GUIContent Swizzle = new GUIContent(
+            "Swizzle",
+            "Reorder and invert texture color channels. For each of R, G, B, A " +
+            "channel picks where the channel data comes from.");
+
+        public static readonly GUIContent TextureType = new GUIContent("Texture Type");
+        public static readonly GUIContent TextureShape = new GUIContent("Texture Shape");
+        public static readonly GUIContent Mapping = new GUIContent("Mapping");
+        public static readonly GUIContent FixupEdgeSeams = new GUIContent("Fixup Edge Seams", "Enable if this texture is used for glossy reflections.");
+        public static readonly GUIContent FilterMode = new GUIContent("Filter Mode");
+        public static readonly GUIContent AnisoLevel = new GUIContent("Aniso Level");
+    }
+}
+
