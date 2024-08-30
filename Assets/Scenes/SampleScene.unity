@@ -260,13 +260,13 @@ MonoBehaviour:
     m_SpritePixelsToUnits: 0
     m_SpriteBorder: {x: 0, y: 0, z: 0, w: 0}
     m_SpriteGenerateFallbackPhysicsShape: 0
-    m_GenerateCubemap: 0
-    m_CubemapConvolution: 0
+    m_GenerateCubemap: 5
+    m_CubemapConvolution: 2
     m_SeamlessCubemap: 0
     m_AlphaIsTransparency: 0
     m_SpriteTessellationDetail: 0
     m_TextureType: 0
-    m_TextureShape: 1
+    m_TextureShape: 2
     m_SingleChannelComponent: 0
     m_FlipbookRows: 0
     m_FlipbookColumns: 0

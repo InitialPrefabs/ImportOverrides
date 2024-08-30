@@ -35,7 +35,7 @@ namespace InitialPrefabs.ImportOverrides {
 
         private static int AsMask(TextureImporterType type) => 1 << (int)type;
 
-        private static void HandleDefaultTexture(SerializedProperty root) {
+        private static void HandleDefaultTexture(SerializedProperty root, TextureImporterShape shape) {
             var srgbProp = root.FindPropertyRelative(Variables.m_sRGBTexture);
             var alphaSourceProp = root.FindPropertyRelative(Variables.m_AlphaSource);
 
@@ -83,38 +83,41 @@ namespace InitialPrefabs.ImportOverrides {
                         TextureImporterSettingsStyles.ReadWrite,
                         isReadableProp.intValue != 0) ? 1 : 0;
 
-                    var isVirtualTxtProp = root.FindPropertyRelative(Variables.m_VTOnly);
-                    isVirtualTxtProp.intValue = EditorGUILayout.Toggle(
-                        TextureImporterSettingsStyles.VirtualTextureOnly,
-                        isVirtualTxtProp.intValue != 0) ? 1 : 0;
+                    if (shape != TextureImporterShape.Texture2DArray) {
+                        var isVirtualTxtProp = root.FindPropertyRelative(Variables.m_VTOnly);
+                        isVirtualTxtProp.intValue = EditorGUILayout.Toggle(
+                            TextureImporterSettingsStyles.VirtualTextureOnly,
+                            isVirtualTxtProp.intValue != 0) ? 1 : 0;
+                    }
 
                     var generateMipMapsProp = root.FindPropertyRelative(Variables.m_EnableMipMap);
                     generateMipMapsProp.intValue = EditorGUILayout.Toggle(
                         TextureImporterSettingsStyles.GenerateMipmaps,
                         generateMipMapsProp.intValue != 0) ? 1 : 0;
 
-                    if (generateMipMapsProp.intValue != 0) {
+                    if (generateMipMapsProp.intValue != 0 && shape != TextureImporterShape.Texture3D) {
                         using (new IndentScope(1)) {
-                            var ignoreMipMapLimitsProp = root.FindPropertyRelative(Variables.m_IgnoreMipmapLimit);
-                            bool useLimits = EditorGUILayout.Toggle(
-                                TextureImporterSettingsStyles.MipmapLimits,
-                                ignoreMipMapLimitsProp.intValue == 0);
-                            ignoreMipMapLimitsProp.intValue = useLimits ? 0 : 1;
-                            // TODO: Limits are not shown here, figure out where they are stored
+                            if (shape != TextureImporterShape.Texture2DArray) {
+                                var ignoreMipMapLimitsProp = root.FindPropertyRelative(Variables.m_IgnoreMipmapLimit);
+                                bool useLimits = EditorGUILayout.Toggle(
+                                    TextureImporterSettingsStyles.MipmapLimits,
+                                    ignoreMipMapLimitsProp.intValue == 0);
+                                ignoreMipMapLimitsProp.intValue = useLimits ? 0 : 1;
+                                // TODO: Limits are not shown here, figure out where they are stored
+                                var mipStreamingProp = root.FindPropertyRelative(Variables.m_StreamingMipmaps);
+                                var isStreaming = EditorGUILayout.Toggle(
+                                    TextureImporterSettingsStyles.MipStreaming,
+                                    mipStreamingProp.intValue != 0);
 
-                            var mipStreamingProp = root.FindPropertyRelative(Variables.m_StreamingMipmaps);
-                            var isStreaming = EditorGUILayout.Toggle(
-                                TextureImporterSettingsStyles.MipStreaming,
-                                mipStreamingProp.intValue != 0);
-
-                            mipStreamingProp.intValue = isStreaming ? 1 : 0;
-                            if (isStreaming) {
-                                using var _ = new IndentScope(1);
-                                // Draw the priority for streaming
-                                var priorityProp = root.FindPropertyRelative(Variables.m_StreamingMipmapsPriority);
-                                priorityProp.intValue = Mathf.Clamp(EditorGUILayout.IntField(
-                                    TextureImporterSettingsStyles.MipmapPriority,
-                                    priorityProp.intValue), -128, 127);
+                                mipStreamingProp.intValue = isStreaming ? 1 : 0;
+                                if (isStreaming) {
+                                    using var _ = new IndentScope(1);
+                                    // Draw the priority for streaming
+                                    var priorityProp = root.FindPropertyRelative(Variables.m_StreamingMipmapsPriority);
+                                    priorityProp.intValue = Mathf.Clamp(EditorGUILayout.IntField(
+                                        TextureImporterSettingsStyles.MipmapPriority,
+                                        priorityProp.intValue), -128, 127);
+                                }
                             }
 
                             var mipMapModeProp = root.FindPropertyRelative(Variables.m_MipMapMode);
@@ -138,7 +141,9 @@ namespace InitialPrefabs.ImportOverrides {
                                 replicateBorderProp.intValue != 0) ? 1 : 0;
 
                             var fadeoutToGrayProp = root.FindPropertyRelative(Variables.m_FadeOut);
-                            bool fadedOut = EditorGUILayout.Toggle(TextureImporterSettingsStyles.FadeoutToGray, fadeoutToGrayProp.intValue != 0);
+                            bool fadedOut = EditorGUILayout.Toggle(
+                                TextureImporterSettingsStyles.FadeoutToGray,
+                                fadeoutToGrayProp.intValue != 0);
 
                             fadeoutToGrayProp.intValue = fadedOut ? 1 : 0;
                             if (fadedOut) {
@@ -188,6 +193,7 @@ namespace InitialPrefabs.ImportOverrides {
             }
         }
 
+        // TODO: Move this to a specialized file
         [Flags]
         private enum TextureInspectorGUIElement {
             None = 0,
@@ -223,47 +229,6 @@ namespace InitialPrefabs.ImportOverrides {
             (int)TextureImporterCubemapConvolution.Specular,
             (int)TextureImporterCubemapConvolution.Diffuse
         };
-
-        /*
-        void CubemapMappingGUI(TextureInspectorGUIElement guiElements)
-        {
-            m_ShowCubeMapSettings.target = (TextureImporterShape)m_TextureShape.intValue == TextureImporterShape.TextureCube;
-            if (EditorGUILayout.BeginFadeGroup(m_ShowCubeMapSettings.faded))
-            {
-                if ((TextureImporterShape)m_TextureShape.intValue == TextureImporterShape.TextureCube)
-                {
-                    Rect controlRect = EditorGUILayout.GetControlRect(true, EditorGUI.kSingleLineHeight, EditorStyles.popup);
-                    GUIContent label = EditorGUI.BeginProperty(controlRect, s_Styles.cubemap, m_GenerateCubemap);
-
-                    EditorGUI.showMixedValue = m_GenerateCubemap.hasMultipleDifferentValues || m_SeamlessCubemap.hasMultipleDifferentValues;
-
-                    EditorGUI.BeginChangeCheck();
-
-                    int value = EditorGUI.IntPopup(controlRect, label, m_GenerateCubemap.intValue, s_Styles.cubemapOptions, s_Styles.cubemapValues2);
-                    if (EditorGUI.EndChangeCheck())
-                        m_GenerateCubemap.intValue = value;
-
-                    EditorGUI.EndProperty();
-                    EditorGUI.indentLevel++;
-
-                    // Convolution
-                    if (ShouldDisplayGUIElement(guiElements, TextureInspectorGUIElement.CubeMapConvolution))
-                    {
-                        EditorGUILayout.IntPopup(m_CubemapConvolution,
-                            s_Styles.cubemapConvolutionOptions,
-                            s_Styles.cubemapConvolutionValues,
-                            s_Styles.cubemapConvolution);
-                    }
-
-                    ToggleFromInt(m_SeamlessCubemap, s_Styles.seamlessCubemap);
-
-                    EditorGUI.indentLevel--;
-                    EditorGUILayout.Space();
-                }
-            }
-            EditorGUILayout.EndFadeGroup();
-        }
-        */
 
         private static readonly GUIContent[] CubemapOptions = {
             EditorGUIUtility.TrTextContent("Auto"),
@@ -308,10 +273,11 @@ namespace InitialPrefabs.ImportOverrides {
             textureTypeProp.intValue = (int)textureType;
 
             var textureShapeProp = root.FindPropertyRelative(Variables.m_TextureShape);
+            TextureImporterShape textureShape;
 
             var isTexture2D = (Texture2DOnly & AsMask(textureType)) > 0;
             using (isTexture2D ? GUIScope.Disabled() : GUIScope.Enabled()) {
-                var textureShape = (TextureImporterShape)EditorGUILayout.EnumPopup(
+                textureShape = (TextureImporterShape)EditorGUILayout.EnumPopup(
                     TextureImporterSettingsStyles.TextureShape,
                     (TextureImporterShape)textureShapeProp.intValue);
                 textureShapeProp.intValue = (int)(textureShape);
@@ -322,11 +288,11 @@ namespace InitialPrefabs.ImportOverrides {
 
                         // TODO: Implement the function above
                         var cubemapProp = root.FindPropertyRelative(Variables.m_GenerateCubemap);
-                        var semalessMapProp = root.FindPropertyRelative(Variables.m_SeamlessCubemap);
+                        var seamlessMapProp = root.FindPropertyRelative(Variables.m_SeamlessCubemap);
 
                         GUIContent l = EditorGUI.BeginProperty(controlRect, TextureImporterSettingsStyles.Mapping, cubemapProp);
 
-                        EditorGUI.showMixedValue = cubemapProp.hasMultipleDifferentValues || semalessMapProp.hasMultipleDifferentValues;
+                        EditorGUI.showMixedValue = cubemapProp.hasMultipleDifferentValues || seamlessMapProp.hasMultipleDifferentValues;
                         EditorGUI.BeginChangeCheck();
                         int value = EditorGUI.IntPopup(controlRect, l, cubemapProp.intValue, CubemapOptions, CubemapValues2);
 
@@ -342,19 +308,24 @@ namespace InitialPrefabs.ImportOverrides {
                                 CubemapConvolutionOptions,
                                 CubemapConvolutionValues,
                                 CubemapConvolution);
-                            ToggleFromInt(semalessMapProp, TextureImporterSettingsStyles.FixupEdgeSeams);
+                            ToggleFromInt(seamlessMapProp, TextureImporterSettingsStyles.FixupEdgeSeams);
                         }
                         EditorGUILayout.Space();
-                        EditorGUILayout.EndFadeGroup();
                         break;
                     case TextureImporterShape.Texture2DArray:
+                        using (new IndentScope(1)) {
+                            var columnsProp = root.FindPropertyRelative(Variables.m_FlipbookColumns);
+                            var rowsProp = root.FindPropertyRelative(Variables.m_FlipbookRows);
+                            EditorGUILayout.PropertyField(columnsProp, TextureImporterSettingsStyles.Columns);
+                            EditorGUILayout.PropertyField(rowsProp, TextureImporterSettingsStyles.Rows);
+                        }
                         break;
                 }
             }
 
             switch (textureType) {
                 case TextureImporterType.Default:
-                    HandleDefaultTexture(root);
+                    HandleDefaultTexture(root, textureShape);
                     break;
                 case TextureImporterType.GUI:
                 case TextureImporterType.Sprite:

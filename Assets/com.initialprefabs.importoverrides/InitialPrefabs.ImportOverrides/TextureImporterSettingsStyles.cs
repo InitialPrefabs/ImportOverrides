@@ -2,7 +2,7 @@
 
 namespace InitialPrefabs.ImportOverrides {
     internal static class TextureImporterSettingsStyles {
-        public static readonly GUIContent ColorTexture = new GUIContent("sRGB (Color Texture");
+        public static readonly GUIContent ColorTexture = new GUIContent("sRGB (Color Texture)");
         public static readonly GUIContent AlphaSource = new GUIContent("Alpha Source");
         public static readonly GUIContent AlphaIsTransparency = new GUIContent("Alpha Is Transparency");
         public static readonly GUIContent NOP2 = new GUIContent("Non-Power of 2", "How no power of twos are scaled on import.");
@@ -40,13 +40,14 @@ namespace InitialPrefabs.ImportOverrides {
             "Swizzle",
             "Reorder and invert texture color channels. For each of R, G, B, A " +
             "channel picks where the channel data comes from.");
-
         public static readonly GUIContent TextureType = new GUIContent("Texture Type");
         public static readonly GUIContent TextureShape = new GUIContent("Texture Shape");
         public static readonly GUIContent Mapping = new GUIContent("Mapping");
         public static readonly GUIContent FixupEdgeSeams = new GUIContent("Fixup Edge Seams", "Enable if this texture is used for glossy reflections.");
         public static readonly GUIContent FilterMode = new GUIContent("Filter Mode");
         public static readonly GUIContent AnisoLevel = new GUIContent("Aniso Level");
+        public static readonly GUIContent Columns = new GUIContent("Columns");
+        public static readonly GUIContent Rows = new GUIContent("Rows");
     }
 }
 
