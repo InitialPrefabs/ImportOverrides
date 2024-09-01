@@ -60,6 +60,39 @@ namespace InitialPrefabs.ImportOverrides {
             EditorGUIUtility.TrTextContent("Smooth"),
         };
         public static readonly GUIContent FlipGreenChannel = new GUIContent("Flip Green Channel");
+
+        public static readonly GUIContent SpriteMode = EditorGUIUtility.TrTextContent("Sprite Mode");
+        public static readonly GUIContent[] SpriteModeOptions = {
+            EditorGUIUtility.TrTextContent("Single"),
+            EditorGUIUtility.TrTextContent("Multiple"),
+            EditorGUIUtility.TrTextContent("Polygon"),
+        };
+        public static readonly GUIContent[] SpriteMeshTypeOptions = {
+            EditorGUIUtility.TrTextContent("Full Rect"),
+            EditorGUIUtility.TrTextContent("Tight"),
+        };
+
+        public static readonly GUIContent spritePixelsPerUnit = EditorGUIUtility.TrTextContent("Pixels Per Unit", "How many pixels in the sprite correspond to one unit in the world.");
+        public static readonly GUIContent spriteExtrude = EditorGUIUtility.TrTextContent("Extrude Edges", "How much empty area to leave around the sprite in the generated mesh.");
+        public static readonly GUIContent spriteMeshType = EditorGUIUtility.TrTextContent("Mesh Type", "Type of sprite mesh to generate.");
+        public static readonly GUIContent spriteAlignment = EditorGUIUtility.TrTextContent("Pivot", "Sprite pivot point in its localspace. May be used for syncing animation frames of different sizes.");
+        public static readonly GUIContent[] spriteAlignmentOptions =
+        {
+            EditorGUIUtility.TrTextContent("Center"),
+            EditorGUIUtility.TrTextContent("Top Left"),
+            EditorGUIUtility.TrTextContent("Top"),
+            EditorGUIUtility.TrTextContent("Top Right"),
+            EditorGUIUtility.TrTextContent("Left"),
+            EditorGUIUtility.TrTextContent("Right"),
+            EditorGUIUtility.TrTextContent("Bottom Left"),
+            EditorGUIUtility.TrTextContent("Bottom"),
+            EditorGUIUtility.TrTextContent("Bottom Right"),
+            EditorGUIUtility.TrTextContent("Custom"),
+        };
+        public static readonly GUIContent spriteGenerateFallbackPhysicsShape = EditorGUIUtility.TrTextContent("Generate Physics Shape", "Generates a default physics shape from the outline of the Sprite/s when a physics shape has not been set in the Sprite Editor.");
+        public static readonly GUIContent applyAndContinueToSpriteEditor = EditorGUIUtility.TrTextContent("Unapplied import settings for \'{0}\'.\n Apply changes and continue to Sprite Editor Window?");
+        public static readonly GUIContent EmptyContent = new GUIContent(" ");
+
     }
 }
 

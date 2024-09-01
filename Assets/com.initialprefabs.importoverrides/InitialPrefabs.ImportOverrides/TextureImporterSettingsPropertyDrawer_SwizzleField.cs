@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ namespace InitialPrefabs.ImportOverrides {
         private static readonly int SwizzleFieldHash = "SwizzleField".GetHashCode();
 
         private static readonly string[] SwizzleOptions = { "R", "G", "B", "A", "1-R", "1-G", "1-B", "1-A", "0", "1" };
+
+        private static readonly Type[] MultiFieldPrefixLabelTypeArgs = { typeof(Rect), typeof(int), typeof(GUIContent), typeof(int) };
+
+        private static readonly ParameterModifier[] Modifiers = new ParameterModifier[1];
 
         private static uint SwizzleField(GUIContent label, uint swizzle) {
             const float singleLineHeight = 18f;
@@ -50,7 +55,6 @@ namespace InitialPrefabs.ImportOverrides {
             EditorGUI.indentLevel = oldIndent;
             return swizzle;
         }
-
     }
 }
 

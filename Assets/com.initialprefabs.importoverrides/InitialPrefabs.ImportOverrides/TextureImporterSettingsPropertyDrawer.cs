@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,10 +20,6 @@ namespace InitialPrefabs.ImportOverrides {
             AsMask(TextureImporterType.Shadowmask);
 
         private static bool Expanded = true;
-
-        private static readonly Type[] MultiFieldPrefixLabelTypeArgs = { typeof(Rect), typeof(int), typeof(GUIContent), typeof(int) };
-
-        private static readonly ParameterModifier[] Modifiers = new ParameterModifier[1];
 
         private static readonly GUIContent[] FilterModeOptions = {
             EditorGUIUtility.TrTextContent("Point (no filter)"),
@@ -283,6 +278,8 @@ namespace InitialPrefabs.ImportOverrides {
                     HandleLegacyGUI(root);
                     break;
                 case TextureImporterType.Sprite:
+                    HandleSprite(root);
+                    break;
                 case TextureImporterType.Cursor:
                 case TextureImporterType.Cookie:
                 case TextureImporterType.Lightmap:
