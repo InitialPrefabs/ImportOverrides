@@ -44,7 +44,7 @@ namespace InitialPrefabs.ImportOverrides {
 
             srgbProp.intValue = EditorGUILayout.Toggle(
                TextureImporterSettingsStyles.ColorTexture, srgbProp.intValue != 0) ?
-                1 : 0;
+               1 : 0;
 
             TextureImporterAlphaSource alphaSource = (TextureImporterAlphaSource)EditorGUILayout.EnumPopup(
                 TextureImporterSettingsStyles.AlphaSource,
@@ -168,7 +168,7 @@ namespace InitialPrefabs.ImportOverrides {
                     // Gamma
                     var ignorePngGammaProp = root.FindPropertyRelative(Variables.m_IgnorePngGamma);
                     ignorePngGammaProp.intValue = EditorGUILayout.Toggle(
-                        new GUIContent("Ignore PNG Gamma", "Ignore the Gamma attribute in png"),
+                        TextureImporterSettingsStyles.IgnorePNGGamma,
                         ignorePngGammaProp.intValue != 0) ? 1 : 0;
 
                     // Do the swizzle here
@@ -280,6 +280,8 @@ namespace InitialPrefabs.ImportOverrides {
                     HandleNormalTexture(root);
                     break;
                 case TextureImporterType.GUI:
+                    HandleLegacyGUI(root);
+                    break;
                 case TextureImporterType.Sprite:
                 case TextureImporterType.Cursor:
                 case TextureImporterType.Cookie:
