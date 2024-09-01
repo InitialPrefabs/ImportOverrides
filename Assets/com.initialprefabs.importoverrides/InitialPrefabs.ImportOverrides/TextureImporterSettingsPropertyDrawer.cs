@@ -189,6 +189,34 @@ namespace InitialPrefabs.ImportOverrides {
             }
         }
 
+        private static void DrawGammaAndSwizzle(SerializedProperty root) {
+            // Gamma
+            var ignorePngGammaProp = root.FindPropertyRelative(Variables.m_IgnorePngGamma);
+            ignorePngGammaProp.intValue = EditorGUILayout.Toggle(
+                TextureImporterSettingsStyles.IgnorePNGGamma,
+                ignorePngGammaProp.intValue != 0) ? 1 : 0;
+
+            // Do the swizzle here
+            using (new IndentScope(1)) {
+                var swizzleProp = root.FindPropertyRelative(Variables.m_Swizzle);
+                EditorGUI.BeginProperty(
+                    EditorGUILayout.BeginHorizontal(),
+                    TextureImporterSettingsStyles.Swizzle,
+                    swizzleProp);
+                EditorGUI.BeginChangeCheck();
+
+                EditorGUI.showMixedValue = swizzleProp.hasMultipleDifferentValues;
+                var value = SwizzleField(TextureImporterSettingsStyles.Swizzle, swizzleProp.uintValue);
+                EditorGUI.showMixedValue = false;
+
+                if (EditorGUI.EndChangeCheck()) {
+                    swizzleProp.uintValue = value;
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUI.EndProperty();
+            }
+        }
+
         private static void ToggleFromInt(SerializedProperty property, GUIContent label) {
             var content = EditorGUI.BeginProperty(EditorGUILayout.BeginHorizontal(), label, property);
             EditorGUI.BeginChangeCheck();
@@ -216,6 +244,12 @@ namespace InitialPrefabs.ImportOverrides {
             TextureImporterShape textureShape;
 
             var isTexture2D = (Texture2DOnly & AsMask(textureType)) > 0;
+
+            // To support settings for Point Lights.
+            if (textureType == TextureImporterType.Cookie) {
+                isTexture2D = cookieLightType != CookieLightType.Point;
+            }
+
             using (isTexture2D ? GUIScope.Disabled() : GUIScope.Enabled()) {
                 textureShape = (TextureImporterShape)EditorGUILayout.EnumPopup(
                     TextureImporterSettingsStyles.TextureShape,
@@ -281,7 +315,11 @@ namespace InitialPrefabs.ImportOverrides {
                     HandleSprite(root);
                     break;
                 case TextureImporterType.Cursor:
+                    HandleCursor(root);
+                    break;
                 case TextureImporterType.Cookie:
+                    HandleCookie(root, ref cookieLightType);
+                    break;
                 case TextureImporterType.Lightmap:
                 case TextureImporterType.DirectionalLightmap:
                 case TextureImporterType.Shadowmask:

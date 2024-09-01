@@ -93,6 +93,13 @@ namespace InitialPrefabs.ImportOverrides {
         public static readonly GUIContent applyAndContinueToSpriteEditor = EditorGUIUtility.TrTextContent("Unapplied import settings for \'{0}\'.\n Apply changes and continue to Sprite Editor Window?");
         public static readonly GUIContent EmptyContent = new GUIContent(" ");
 
+        public static readonly GUIContent CookieType = EditorGUIUtility.TrTextContent("Light Type");
+        public static readonly GUIContent[] CookieOptions =
+        {
+            EditorGUIUtility.TrTextContent("Spot Light"),
+            EditorGUIUtility.TrTextContent("Directional Light"),
+            EditorGUIUtility.TrTextContent("Point Light"),
+        };
     }
 }
 
