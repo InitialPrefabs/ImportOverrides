@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace InitialPrefabs.ImportOverrides {
+
     internal static class TextureImporterSettingsStyles {
+
         public static readonly GUIContent ColorTexture = new GUIContent("sRGB (Color Texture)");
         public static readonly GUIContent AlphaSource = new GUIContent("Alpha Source");
         public static readonly GUIContent AlphaIsTransparency = new GUIContent("Alpha Is Transparency");
@@ -48,6 +51,15 @@ namespace InitialPrefabs.ImportOverrides {
         public static readonly GUIContent AnisoLevel = new GUIContent("Aniso Level");
         public static readonly GUIContent Columns = new GUIContent("Columns");
         public static readonly GUIContent Rows = new GUIContent("Rows");
+        public static readonly GUIContent GenerateFromBump = new GUIContent("Create from Grayscale",
+            "The grayscale of the image is used as the heightmap for generating the normal map.");
+        public static readonly GUIContent Bumpiness = new GUIContent("Bumpiness");
+        public static readonly GUIContent BumpFilteringOption = new GUIContent("Filtering");
+        public static readonly GUIContent[] BumpFilteringOptions = {
+            EditorGUIUtility.TrTextContent("Sharp"),
+            EditorGUIUtility.TrTextContent("Smooth"),
+        };
+        public static readonly GUIContent FlipGreenChannel = new GUIContent("Flip Green Channel");
     }
 }
 

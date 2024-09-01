@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace InitialPrefabs.ImportOverrides {
+
     [CustomPropertyDrawer(typeof(TextureImporterSettings))]
     public partial class TextureImporterSettingsPropertyDrawer : PropertyDrawer {
         private const float kSpacingSubLabel = 4;
@@ -19,7 +20,7 @@ namespace InitialPrefabs.ImportOverrides {
             AsMask(TextureImporterType.DirectionalLightmap) |
             AsMask(TextureImporterType.Shadowmask);
 
-        private static bool Folded = false;
+        private static bool Expanded = true;
 
         private static readonly Type[] MultiFieldPrefixLabelTypeArgs = { typeof(Rect), typeof(int), typeof(GUIContent), typeof(int) };
 
@@ -70,7 +71,7 @@ namespace InitialPrefabs.ImportOverrides {
             EditorGUILayout.Space();
 
             // Draw the advanced dropdown
-            if (Folded = EditorGUILayout.Foldout(Folded, "Advance")) {
+            if (Expanded = EditorGUILayout.Foldout(Expanded, "Advance")) {
                 using (new IndentScope(1)) {
                     var npotProp = root.FindPropertyRelative(Variables.m_NPOTScale);
                     var npot = (TextureImporterNPOTScale)EditorGUILayout.EnumPopup(
@@ -193,62 +194,6 @@ namespace InitialPrefabs.ImportOverrides {
             }
         }
 
-        // TODO: Move this to a specialized file
-        [Flags]
-        private enum TextureInspectorGUIElement {
-            None = 0,
-            PowerOfTwo = 1 << 0,
-            Readable = 1 << 1,
-            AlphaHandling = 1 << 2,
-            ColorSpace = 1 << 3,
-            MipMaps = 1 << 4,
-            NormalMap = 1 << 5,
-            Sprite = 1 << 6,
-            Cookie = 1 << 7,
-            CubeMapConvolution = 1 << 8,
-            CubeMapping = 1 << 9,
-            SingleChannelComponent = 1 << 11,
-            PngGamma = 1 << 12,
-            VTOnly = 1 << 13,
-            ElementsAtlas = 1 << 14,
-            Swizzle = 1 << 15,
-        }
-
-        private static readonly GUIContent CubemapConvolution = EditorGUIUtility.TrTextContent("Convolution Type");
-
-        private static readonly GUIContent[] CubemapConvolutionOptions = {
-            EditorGUIUtility.TrTextContent("None"),
-            EditorGUIUtility.TrTextContent("Specular (Glossy Reflection)",
-                "Convolve cubemap for specular reflections with varying smoothness (Glossy Reflections)."),
-            EditorGUIUtility.TrTextContent("Diffuse (Irradiance)",
-                "Convolve cubemap for diffuse-only reflection (Irradiance Cubemap).")
-        };
-
-        private static readonly int[] CubemapConvolutionValues = {
-            (int)TextureImporterCubemapConvolution.None,
-            (int)TextureImporterCubemapConvolution.Specular,
-            (int)TextureImporterCubemapConvolution.Diffuse
-        };
-
-        private static readonly GUIContent[] CubemapOptions = {
-            EditorGUIUtility.TrTextContent("Auto"),
-            EditorGUIUtility.TrTextContent("6 Frames Layout (Cubic Environment)",
-                "Texture contains 6 images arranged in one of the standard cubemap layouts - " +
-                "cross or sequence (+x, -x, +y, -y, +z, -z). Texture can be in vertical or horizontal orientation."),
-            EditorGUIUtility.TrTextContent("Latitude-Longitude Layout (Cylindrical)",
-                "Texture contains an image of a ball unwrapped such that latitude and longitude " +
-                "are mapped to horizontal and vertical dimensions (as on a globe)."),
-            EditorGUIUtility.TrTextContent("Mirrored Ball (Spheremap)",
-                "Texture contains an image of a mirrored ball.")
-        };
-
-        private static readonly int[] CubemapValues2 = {
-            (int)TextureImporterGenerateCubemap.AutoCubemap,
-            (int)TextureImporterGenerateCubemap.FullCubemap,
-            (int)TextureImporterGenerateCubemap.Cylindrical,
-            (int)TextureImporterGenerateCubemap.Spheremap
-        };
-
         private static void ToggleFromInt(SerializedProperty property, GUIContent label) {
             var content = EditorGUI.BeginProperty(EditorGUILayout.BeginHorizontal(), label, property);
             EditorGUI.BeginChangeCheck();
@@ -313,6 +258,7 @@ namespace InitialPrefabs.ImportOverrides {
                         EditorGUILayout.Space();
                         break;
                     case TextureImporterShape.Texture2DArray:
+                    case TextureImporterShape.Texture3D:
                         using (new IndentScope(1)) {
                             var columnsProp = root.FindPropertyRelative(Variables.m_FlipbookColumns);
                             var rowsProp = root.FindPropertyRelative(Variables.m_FlipbookRows);
@@ -323,9 +269,15 @@ namespace InitialPrefabs.ImportOverrides {
                 }
             }
 
+            bool showAniso = false;
+
             switch (textureType) {
                 case TextureImporterType.Default:
                     HandleDefaultTexture(root, textureShape);
+                    showAniso = true;
+                    break;
+                case TextureImporterType.NormalMap:
+                    HandleNormalTexture(root);
                     break;
                 case TextureImporterType.GUI:
                 case TextureImporterType.Sprite:
@@ -350,7 +302,7 @@ namespace InitialPrefabs.ImportOverrides {
             // Draw the filter and aniso level
             EditorGUILayout.IntPopup(filterModeProp, FilterModeOptions, FilterModeValues, TextureImporterSettingsStyles.FilterMode);
 
-            using (new GUIScope(filterModeProp.intValue != (int)FilterMode.Point)) {
+            using (new GUIScope(showAniso && filterModeProp.intValue != (int)FilterMode.Point)) {
                 var anisoProp = root.FindPropertyRelative(Variables.m_Aniso);
                 anisoProp.intValue = EditorGUILayout.IntSlider(TextureImporterSettingsStyles.AnisoLevel, anisoProp.intValue, 0, 16);
             }

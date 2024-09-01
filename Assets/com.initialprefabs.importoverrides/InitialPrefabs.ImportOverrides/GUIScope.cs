@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace InitialPrefabs.ImportOverrides {
@@ -33,6 +34,29 @@ namespace InitialPrefabs.ImportOverrides {
 
         public void Dispose() {
             GUI.enabled = true;
+        }
+    }
+
+    public readonly ref struct ChangeCheckScope {
+        private readonly Action onComplete;
+
+        private ChangeCheckScope(Action onComplete) {
+            this.onComplete = onComplete;
+        }
+
+        public static ChangeCheckScope Begin() {
+            return Begin(null);
+        }
+
+        public static ChangeCheckScope Begin(Action onComplete) {
+            EditorGUI.BeginChangeCheck();
+            return new ChangeCheckScope(onComplete);
+        }
+
+        public void Dispose() {
+            if (EditorGUI.EndChangeCheck()) {
+                onComplete?.Invoke();
+            }
         }
     }
 }

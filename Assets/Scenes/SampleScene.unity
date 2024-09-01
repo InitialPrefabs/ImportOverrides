@@ -241,14 +241,14 @@ MonoBehaviour:
     m_MipMapFadeDistanceStart: 2
     m_MipMapFadeDistanceEnd: 7
     m_ConvertToNormalMap: 0
-    m_HeightScale: 0
+    m_HeightScale: 0.254
     m_NormalMapFilter: 0
     m_FlipGreenChannel: 0
     m_Swizzle: 50462976
-    m_IsReadable: 0
+    m_IsReadable: 1
     m_StreamingMipmaps: 0
     m_StreamingMipmapsPriority: 0
-    m_VTOnly: 0
+    m_VTOnly: 1
     m_IgnoreMipmapLimit: 0
     m_NPOTScale: 1
     m_sRGBTexture: 1
@@ -265,11 +265,11 @@ MonoBehaviour:
     m_SeamlessCubemap: 0
     m_AlphaIsTransparency: 0
     m_SpriteTessellationDetail: 0
-    m_TextureType: 0
-    m_TextureShape: 2
+    m_TextureType: 1
+    m_TextureShape: 8
     m_SingleChannelComponent: 0
-    m_FlipbookRows: 0
-    m_FlipbookColumns: 0
+    m_FlipbookRows: 1
+    m_FlipbookColumns: 1
     m_IgnorePngGamma: 0
     m_CookieMode: 0
     m_FilterMode: 0
