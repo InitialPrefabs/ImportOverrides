@@ -159,7 +159,6 @@ namespace InitialPrefabs.ImportOverrides {
                             }
                         }
                     }
-                    DrawGammaAndSwizzle(root);
                 }
             }
         }
@@ -205,8 +204,17 @@ namespace InitialPrefabs.ImportOverrides {
             EditorGUI.EndProperty();
         }
 
+        private bool showSettings;
+
         // TODO: For TextureImporterPlatformSettings use the BuildTargetGroup API
         public override void OnGUI(Rect position, SerializedProperty root, GUIContent label) {
+            // Early return if it's closed
+            showSettings = EditorGUILayout.Foldout(showSettings, label);
+
+            if (!showSettings) {
+                return;
+            }
+
             EditorGUI.BeginChangeCheck();
             root.serializedObject.Update();
 
@@ -275,6 +283,7 @@ namespace InitialPrefabs.ImportOverrides {
             }
 
             var showAniso = false;
+            var showGammaAndSwizzle = true;
 
             switch (textureType) {
                 case TextureImporterType.Default:
@@ -286,26 +295,45 @@ namespace InitialPrefabs.ImportOverrides {
                     break;
                 case TextureImporterType.GUI:
                     HandleLegacyGUI(root);
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
                     break;
                 case TextureImporterType.Sprite:
                     HandleSprite(root);
+                    showGammaAndSwizzle = false;
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
                     break;
                 case TextureImporterType.Cursor:
                     HandleCursor(root);
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
                     break;
                 case TextureImporterType.Cookie:
                     HandleCookie(root, ref cookieLightType);
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
                     break;
                 case TextureImporterType.Lightmap:
                     HandleLightmap(root);
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
                     break;
                 case TextureImporterType.DirectionalLightmap:
+                    HandleLightmap(root);
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
                     break;
                 case TextureImporterType.Shadowmask:
+                    HandleLightmap(root);
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
+                    break;
+                case TextureImporterType.SingleChannel:
+                    HandleSingleChannel(root);
+                    textureShapeProp.intValue = (int)TextureImporterShape.Texture2D;
                     break;
                 default:
                     break;
             }
+
+            if (showGammaAndSwizzle) {
+                DrawGammaAndSwizzle(root);
+            }
+            EditorGUILayout.Space();
 
             var wrapUProp = root.FindPropertyRelative(Variables.m_WrapU);
             var wrapVProp = root.FindPropertyRelative(Variables.m_WrapV);

@@ -28,7 +28,7 @@ namespace InitialPrefabs.ImportOverrides {
                     if (generateMipMapsProp.intValue != 0) {
                         using (new IndentScope(1)) {
                             var ignoreMipMapLimitsProp = root.FindPropertyRelative(Variables.m_IgnoreMipmapLimit);
-                            bool useLimits = EditorGUILayout.Toggle(
+                            var useLimits = EditorGUILayout.Toggle(
                                 TextureImporterSettingsStyles.MipmapLimits,
                                 ignoreMipMapLimitsProp.intValue == 0);
                             ignoreMipMapLimitsProp.intValue = useLimits ? 0 : 1;
@@ -53,14 +53,14 @@ namespace InitialPrefabs.ImportOverrides {
                                 TextureImporterSettingsStyles.MipmapFiltering, (TextureImporterMipFilter)mipMapModeProp.intValue);
 
                             var preserveCoverageProp = root.FindPropertyRelative(Variables.m_MipMapsPreserveCoverage);
-                            bool coverage = EditorGUILayout.Toggle(TextureImporterSettingsStyles.PreserveCoverage,
+                            var coverage = EditorGUILayout.Toggle(TextureImporterSettingsStyles.PreserveCoverage,
                                 preserveCoverageProp.intValue != 0);
 
                             preserveCoverageProp.intValue = coverage ? 1 : 0;
 
                             if (coverage) {
                                 using var _ = new IndentScope(1);
-                                EditorGUILayout.PropertyField(root.FindPropertyRelative(Variables.m_AlphaTestReferenceValue),
+                                var _b = EditorGUILayout.PropertyField(root.FindPropertyRelative(Variables.m_AlphaTestReferenceValue),
                                     TextureImporterSettingsStyles.AlphaCutoff);
                             }
 
@@ -69,7 +69,7 @@ namespace InitialPrefabs.ImportOverrides {
                                 replicateBorderProp.intValue != 0) ? 1 : 0;
 
                             var fadeoutToGrayProp = root.FindPropertyRelative(Variables.m_FadeOut);
-                            bool fadedOut = EditorGUILayout.Toggle(
+                            var fadedOut = EditorGUILayout.Toggle(
                                 TextureImporterSettingsStyles.FadeoutToGray,
                                 fadeoutToGrayProp.intValue != 0);
 
@@ -91,11 +91,8 @@ namespace InitialPrefabs.ImportOverrides {
                             }
                         }
                     }
-                    DrawGammaAndSwizzle(root);
                 }
             }
-            EditorGUILayout.Space();
         }
     }
 }
-

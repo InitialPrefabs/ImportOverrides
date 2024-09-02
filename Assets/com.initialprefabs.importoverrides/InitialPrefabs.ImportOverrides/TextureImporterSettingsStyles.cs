@@ -6,7 +6,6 @@ namespace InitialPrefabs.ImportOverrides {
     internal static class TextureImporterSettingsStyles {
 
         public static readonly GUIContent ColorTexture = new GUIContent("sRGB (Color Texture)");
-        public static readonly GUIContent AlphaSource = new GUIContent("Alpha Source");
         public static readonly GUIContent AlphaIsTransparency = new GUIContent("Alpha Is Transparency");
         public static readonly GUIContent NOP2 = new GUIContent("Non-Power of 2", "How no power of twos are scaled on import.");
         public static readonly GUIContent ReadWrite = new GUIContent("Read/Write", "Enable access to raw pixel from code.");
@@ -72,12 +71,15 @@ namespace InitialPrefabs.ImportOverrides {
             EditorGUIUtility.TrTextContent("Tight"),
         };
 
-        public static readonly GUIContent spritePixelsPerUnit = EditorGUIUtility.TrTextContent("Pixels Per Unit", "How many pixels in the sprite correspond to one unit in the world.");
-        public static readonly GUIContent spriteExtrude = EditorGUIUtility.TrTextContent("Extrude Edges", "How much empty area to leave around the sprite in the generated mesh.");
-        public static readonly GUIContent spriteMeshType = EditorGUIUtility.TrTextContent("Mesh Type", "Type of sprite mesh to generate.");
-        public static readonly GUIContent spriteAlignment = EditorGUIUtility.TrTextContent("Pivot", "Sprite pivot point in its localspace. May be used for syncing animation frames of different sizes.");
-        public static readonly GUIContent[] spriteAlignmentOptions =
-        {
+        public static readonly GUIContent SpritePixelsPerUnit = EditorGUIUtility.TrTextContent(
+            "Pixels Per Unit", "How many pixels in the sprite correspond to one unit in the world.");
+        public static readonly GUIContent SpriteExtrude = EditorGUIUtility.TrTextContent(
+            "Extrude Edges", "How much empty area to leave around the sprite in the generated mesh.");
+        public static readonly GUIContent SpriteMeshType = EditorGUIUtility.TrTextContent(
+            "Mesh Type", "Type of sprite mesh to generate.");
+        public static readonly GUIContent SpriteAlignment = EditorGUIUtility.TrTextContent(
+            "Pivot", "Sprite pivot point in its localspace. May be used for syncing animation frames of different sizes.");
+        public static readonly GUIContent[] SpriteAlignmentOptions = {
             EditorGUIUtility.TrTextContent("Center"),
             EditorGUIUtility.TrTextContent("Top Left"),
             EditorGUIUtility.TrTextContent("Top"),
@@ -89,17 +91,46 @@ namespace InitialPrefabs.ImportOverrides {
             EditorGUIUtility.TrTextContent("Bottom Right"),
             EditorGUIUtility.TrTextContent("Custom"),
         };
-        public static readonly GUIContent spriteGenerateFallbackPhysicsShape = EditorGUIUtility.TrTextContent("Generate Physics Shape", "Generates a default physics shape from the outline of the Sprite/s when a physics shape has not been set in the Sprite Editor.");
-        public static readonly GUIContent applyAndContinueToSpriteEditor = EditorGUIUtility.TrTextContent("Unapplied import settings for \'{0}\'.\n Apply changes and continue to Sprite Editor Window?");
+        public static readonly GUIContent spriteGenerateFallbackPhysicsShape = EditorGUIUtility.TrTextContent(
+            "Generate Physics Shape",
+            "Generates a default physics shape from the outline of the Sprite/s when a physics shape " +
+            "has not been set in the Sprite Editor.");
+        public static readonly GUIContent applyAndContinueToSpriteEditor = EditorGUIUtility.TrTextContent(
+            "Unapplied import settings for \'{0}\'.\n Apply changes and continue to Sprite Editor Window?");
         public static readonly GUIContent EmptyContent = new GUIContent(" ");
 
         public static readonly GUIContent CookieType = EditorGUIUtility.TrTextContent("Light Type");
-        public static readonly GUIContent[] CookieOptions =
-        {
+        public static readonly GUIContent[] CookieOptions = {
             EditorGUIUtility.TrTextContent("Spot Light"),
             EditorGUIUtility.TrTextContent("Directional Light"),
             EditorGUIUtility.TrTextContent("Point Light"),
         };
+
+        public static readonly GUIContent SingleChannelComponent = EditorGUIUtility.TrTextContent(
+            "Channel", "As which color/alpha component the single channel texture is treated.");
+        public static readonly GUIContent[] SingleChannelComponentOptions =
+        {
+            EditorGUIUtility.TrTextContent("Alpha", "Use the alpha channel (compression not supported)."),
+            EditorGUIUtility.TrTextContent("Red", "Use the red color component."),
+        };
+        public static readonly int[] SingleChannelComponentValues =
+        {
+            (int)TextureImporterSingleChannelComponent.Alpha,
+            (int)TextureImporterSingleChannelComponent.Red,
+        };
+
+        public static readonly GUIContent AlphaSource = EditorGUIUtility.TrTextContent(
+            "Alpha Source",
+            "How is the alpha generated for the imported texture.");
+        public static readonly GUIContent[] AlphaSourceOptions = {
+            EditorGUIUtility.TrTextContent("None", "No Alpha will be used."),
+            EditorGUIUtility.TrTextContent("Input Texture Alpha", "Use Alpha from the input texture if one is provided."),
+            EditorGUIUtility.TrTextContent("From Gray Scale", "Generate Alpha from image gray scale."),
+        };
+        public static readonly int[] AlphaSourceValues = {
+            (int)TextureImporterAlphaSource.None,
+            (int)TextureImporterAlphaSource.FromInput,
+            (int)TextureImporterAlphaSource.FromGrayScale,
+        };
     }
 }
-

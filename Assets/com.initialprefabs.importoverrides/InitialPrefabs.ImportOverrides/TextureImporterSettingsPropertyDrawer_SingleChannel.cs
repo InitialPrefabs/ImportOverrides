@@ -2,13 +2,33 @@
 using UnityEngine;
 
 namespace InitialPrefabs.ImportOverrides {
-    public partial class TextureImporterSettingsPropertyDrawer {
-        private static readonly int[] SpriteValues = { 1, 2, 3 };
-        private static readonly int[] SpriteMeshOptionValues = { 0, 1 };
 
-        private static void HandleSprite(SerializedProperty root) {
+    public partial class TextureImporterSettingsPropertyDrawer {
+        private static void HandleSingleChannel(SerializedProperty root) {
             EditorGUILayout.Space();
-            SpriteGUI(root);
+            var singleChannelComp = root.FindPropertyRelative(Variables.m_SingleChannelComponent);
+
+            EditorGUILayout.IntPopup(singleChannelComp,
+                TextureImporterSettingsStyles.SingleChannelComponentOptions,
+                TextureImporterSettingsStyles.SingleChannelComponentValues,
+                TextureImporterSettingsStyles.SingleChannelComponent);
+
+            var showAlphaSource = singleChannelComp.intValue == (int)TextureImporterSingleChannelComponent.Alpha;
+
+            if (showAlphaSource) {
+                var alphaSource = root.FindPropertyRelative(Variables.m_AlphaSource);
+                EditorGUILayout.IntPopup(alphaSource,
+                    TextureImporterSettingsStyles.AlphaSourceOptions,
+                    TextureImporterSettingsStyles.AlphaSourceValues,
+                    TextureImporterSettingsStyles.AlphaSource);
+
+                var showAlphaIsTransparency =
+                    (TextureImporterAlphaSource)alphaSource.intValue != TextureImporterAlphaSource.None;
+                using (new GUIScope(!showAlphaIsTransparency)) {
+                    var alphaIsTranparency = root.FindPropertyRelative(Variables.m_AlphaIsTransparency);
+                    ToggleFromInt(alphaIsTranparency, TextureImporterSettingsStyles.AlphaIsTransparency);
+                }
+            }
             EditorGUILayout.Space();
 
             // Draw the advanced dropdown
@@ -98,60 +118,6 @@ namespace InitialPrefabs.ImportOverrides {
                     }
                 }
             }
-            EditorGUILayout.Space();
-        }
-
-        private static void SpriteGUI(SerializedProperty root) {
-            var spriteMode = root.FindPropertyRelative(Variables.m_SpriteMode);
-            var spritePixelsToUnits = root.FindPropertyRelative(Variables.m_SpritePixelsToUnits);
-            var spriteMeshType = root.FindPropertyRelative(Variables.m_SpriteMeshType);
-            var spriteExtrude = root.FindPropertyRelative(Variables.m_SpriteExtrude);
-            var alignment = root.FindPropertyRelative(Variables.m_Alignment);
-            var spritePivot = root.FindPropertyRelative(Variables.m_SpritePivot);
-            var spriteGenerateFallbackPhysicsShape = root.FindPropertyRelative(Variables.m_SpriteGenerateFallbackPhysicsShape);
-
-            // Sprite mode selection
-            EditorGUI.BeginChangeCheck();
-
-            EditorGUILayout.IntPopup(
-                spriteMode,
-                TextureImporterSettingsStyles.SpriteModeOptions,
-                SpriteValues, TextureImporterSettingsStyles.SpriteMode);
-
-            // Ensure that PropertyField focus will be cleared when we change spriteMode.
-            if (EditorGUI.EndChangeCheck()) {
-                GUIUtility.keyboardControl = 0;
-            }
-
-            EditorGUI.indentLevel++;
-
-            // Show generic attributes
-            _ = EditorGUILayout.PropertyField(spritePixelsToUnits, TextureImporterSettingsStyles.SpritePixelsPerUnit);
-
-            EditorGUILayout.IntPopup(spriteMeshType,
-                TextureImporterSettingsStyles.SpriteMeshTypeOptions,
-                SpriteMeshOptionValues, TextureImporterSettingsStyles.SpriteMeshType);
-
-            EditorGUILayout.IntSlider(spriteExtrude, 0, 32, TextureImporterSettingsStyles.SpriteExtrude);
-
-            if (spriteMode.intValue == (int)SpriteImportMode.Single) {
-                alignment.intValue = EditorGUILayout.Popup(
-                    TextureImporterSettingsStyles.SpriteAlignment,
-                    alignment.intValue, TextureImporterSettingsStyles.SpriteAlignmentOptions);
-
-                if (alignment.intValue == (int)SpriteAlignment.Custom) {
-                    GUILayout.BeginHorizontal();
-                    _ = EditorGUILayout.PropertyField(spritePivot, TextureImporterSettingsStyles.EmptyContent);
-                    GUILayout.EndHorizontal();
-                }
-            }
-
-            if (spriteMode.intValue != (int)SpriteImportMode.Polygon) {
-                ToggleFromInt(spriteGenerateFallbackPhysicsShape, TextureImporterSettingsStyles.spriteGenerateFallbackPhysicsShape);
-            }
-
-            EditorGUI.indentLevel--;
-            // Do not draw the sprite window utility, that's leaved per importer
         }
     }
 }

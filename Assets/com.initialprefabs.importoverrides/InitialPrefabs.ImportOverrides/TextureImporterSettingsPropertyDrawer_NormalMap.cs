@@ -27,35 +27,8 @@ namespace InitialPrefabs.ImportOverrides {
                     generateMipMapsProp.intValue = EditorGUILayout.Toggle(
                         TextureImporterSettingsStyles.GenerateMipmaps,
                         generateMipMapsProp.intValue != 0) ? 1 : 0;
-
-                    // Gamma
-                    var ignorePngGammaProp = root.FindPropertyRelative(Variables.m_IgnorePngGamma);
-                    ignorePngGammaProp.intValue = EditorGUILayout.Toggle(
-                        TextureImporterSettingsStyles.IgnorePNGGamma,
-                        ignorePngGammaProp.intValue != 0) ? 1 : 0;
-
-                    // Do the swizzle here
-                    using (new IndentScope(1)) {
-                        var swizzleProp = root.FindPropertyRelative(Variables.m_Swizzle);
-                        EditorGUI.BeginProperty(
-                            EditorGUILayout.BeginHorizontal(),
-                            TextureImporterSettingsStyles.Swizzle,
-                            swizzleProp);
-                        EditorGUI.BeginChangeCheck();
-
-                        EditorGUI.showMixedValue = swizzleProp.hasMultipleDifferentValues;
-                        var value = SwizzleField(TextureImporterSettingsStyles.Swizzle, swizzleProp.uintValue);
-                        EditorGUI.showMixedValue = false;
-
-                        if (EditorGUI.EndChangeCheck()) {
-                            swizzleProp.uintValue = value;
-                        }
-                        EditorGUILayout.EndHorizontal();
-                        EditorGUI.EndProperty();
-                    }
                 }
             }
-            EditorGUILayout.Space();
         }
 
         private static void BumpGUI(SerializedProperty root) {
@@ -80,4 +53,3 @@ namespace InitialPrefabs.ImportOverrides {
         }
     }
 }
-

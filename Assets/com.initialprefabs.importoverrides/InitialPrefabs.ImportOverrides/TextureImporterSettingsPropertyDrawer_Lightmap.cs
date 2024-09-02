@@ -94,8 +94,6 @@ namespace InitialPrefabs.ImportOverrides {
                     }
                 }
             }
-            DrawGammaAndSwizzle(root);
-            EditorGUILayout.Space();
         }
     }
 }
