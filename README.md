@@ -30,4 +30,4 @@ demo folder, you can see a Scriptable Object called `Demo`.
 default struct, it shows a GUI similar to `TextureImporterSettings`.
 
 ## Reference Video
-![demo](importoverrides-demo.mp4)
+https://github.com/user-attachments/assets/4beae39d-5f3d-450e-85bd-25ef40803f25
