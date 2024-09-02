@@ -30,7 +30,7 @@ https://github.com/user-attachments/assets/4beae39d-5f3d-450e-85bd-25ef40803f25
 
 In the  demo folder, you can see a Scriptable Object called `Demo`.
 * The Demo Scriptable Object only has the `TextureImporterSettings` variable. Instead of showing the
-default struct, it shows a GUI similar to `TextureImporterSettings`.
+default struct, it shows a GUI similar to the `TextureImporter`.
 
 ## Install
 You have a couple of options to install this package.
