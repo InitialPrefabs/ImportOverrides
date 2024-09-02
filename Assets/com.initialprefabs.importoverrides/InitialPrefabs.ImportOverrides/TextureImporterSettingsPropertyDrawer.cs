@@ -41,7 +41,7 @@ namespace InitialPrefabs.ImportOverrides {
                TextureImporterSettingsStyles.ColorTexture, srgbProp.intValue != 0) ?
                1 : 0;
 
-            TextureImporterAlphaSource alphaSource = (TextureImporterAlphaSource)EditorGUILayout.EnumPopup(
+            var alphaSource = (TextureImporterAlphaSource)EditorGUILayout.EnumPopup(
                 TextureImporterSettingsStyles.AlphaSource,
                 (TextureImporterAlphaSource)alphaSourceProp.intValue);
             alphaSourceProp.intValue = (int)alphaSource;
@@ -95,7 +95,7 @@ namespace InitialPrefabs.ImportOverrides {
                         using (new IndentScope(1)) {
                             if (shape != TextureImporterShape.Texture2DArray) {
                                 var ignoreMipMapLimitsProp = root.FindPropertyRelative(Variables.m_IgnoreMipmapLimit);
-                                bool useLimits = EditorGUILayout.Toggle(
+                                var useLimits = EditorGUILayout.Toggle(
                                     TextureImporterSettingsStyles.MipmapLimits,
                                     ignoreMipMapLimitsProp.intValue == 0);
                                 ignoreMipMapLimitsProp.intValue = useLimits ? 0 : 1;
@@ -121,14 +121,14 @@ namespace InitialPrefabs.ImportOverrides {
                                 TextureImporterSettingsStyles.MipmapFiltering, (TextureImporterMipFilter)mipMapModeProp.intValue);
 
                             var preserveCoverageProp = root.FindPropertyRelative(Variables.m_MipMapsPreserveCoverage);
-                            bool coverage = EditorGUILayout.Toggle(TextureImporterSettingsStyles.PreserveCoverage,
+                            var coverage = EditorGUILayout.Toggle(TextureImporterSettingsStyles.PreserveCoverage,
                                 preserveCoverageProp.intValue != 0);
 
                             preserveCoverageProp.intValue = coverage ? 1 : 0;
 
                             if (coverage) {
                                 using var _ = new IndentScope(1);
-                                EditorGUILayout.PropertyField(root.FindPropertyRelative(Variables.m_AlphaTestReferenceValue),
+                                var _b = EditorGUILayout.PropertyField(root.FindPropertyRelative(Variables.m_AlphaTestReferenceValue),
                                     TextureImporterSettingsStyles.AlphaCutoff);
                             }
 
@@ -137,7 +137,7 @@ namespace InitialPrefabs.ImportOverrides {
                                 replicateBorderProp.intValue != 0) ? 1 : 0;
 
                             var fadeoutToGrayProp = root.FindPropertyRelative(Variables.m_FadeOut);
-                            bool fadedOut = EditorGUILayout.Toggle(
+                            var fadedOut = EditorGUILayout.Toggle(
                                 TextureImporterSettingsStyles.FadeoutToGray,
                                 fadeoutToGrayProp.intValue != 0);
 
@@ -159,32 +159,7 @@ namespace InitialPrefabs.ImportOverrides {
                             }
                         }
                     }
-
-                    // Gamma
-                    var ignorePngGammaProp = root.FindPropertyRelative(Variables.m_IgnorePngGamma);
-                    ignorePngGammaProp.intValue = EditorGUILayout.Toggle(
-                        TextureImporterSettingsStyles.IgnorePNGGamma,
-                        ignorePngGammaProp.intValue != 0) ? 1 : 0;
-
-                    // Do the swizzle here
-                    using (new IndentScope(1)) {
-                        var swizzleProp = root.FindPropertyRelative(Variables.m_Swizzle);
-                        EditorGUI.BeginProperty(
-                            EditorGUILayout.BeginHorizontal(),
-                            TextureImporterSettingsStyles.Swizzle,
-                            swizzleProp);
-                        EditorGUI.BeginChangeCheck();
-
-                        EditorGUI.showMixedValue = swizzleProp.hasMultipleDifferentValues;
-                        var value = SwizzleField(TextureImporterSettingsStyles.Swizzle, swizzleProp.uintValue);
-                        EditorGUI.showMixedValue = false;
-
-                        if (EditorGUI.EndChangeCheck()) {
-                            swizzleProp.uintValue = value;
-                        }
-                        EditorGUILayout.EndHorizontal();
-                        EditorGUI.EndProperty();
-                    }
+                    DrawGammaAndSwizzle(root);
                 }
             }
         }
@@ -199,7 +174,7 @@ namespace InitialPrefabs.ImportOverrides {
             // Do the swizzle here
             using (new IndentScope(1)) {
                 var swizzleProp = root.FindPropertyRelative(Variables.m_Swizzle);
-                EditorGUI.BeginProperty(
+                _ = EditorGUI.BeginProperty(
                     EditorGUILayout.BeginHorizontal(),
                     TextureImporterSettingsStyles.Swizzle,
                     swizzleProp);
@@ -221,10 +196,11 @@ namespace InitialPrefabs.ImportOverrides {
             var content = EditorGUI.BeginProperty(EditorGUILayout.BeginHorizontal(), label, property);
             EditorGUI.BeginChangeCheck();
             EditorGUI.showMixedValue = property.hasMultipleDifferentValues;
-            int value = EditorGUILayout.Toggle(content, property.intValue > 0) ? 1 : 0;
+            var value = EditorGUILayout.Toggle(content, property.intValue > 0) ? 1 : 0;
             EditorGUI.showMixedValue = false;
-            if (EditorGUI.EndChangeCheck())
+            if (EditorGUI.EndChangeCheck()) {
                 property.intValue = value;
+            }
             EditorGUILayout.EndHorizontal();
             EditorGUI.EndProperty();
         }
@@ -254,21 +230,21 @@ namespace InitialPrefabs.ImportOverrides {
                 textureShape = (TextureImporterShape)EditorGUILayout.EnumPopup(
                     TextureImporterSettingsStyles.TextureShape,
                     (TextureImporterShape)textureShapeProp.intValue);
-                textureShapeProp.intValue = (int)(textureShape);
+                textureShapeProp.intValue = (int)textureShape;
 
                 switch (textureShape) {
                     case TextureImporterShape.TextureCube:
-                        Rect controlRect = EditorGUILayout.GetControlRect(true, kSingleLineHeight, EditorStyles.popup);
+                        var controlRect = EditorGUILayout.GetControlRect(true, kSingleLineHeight, EditorStyles.popup);
 
                         // TODO: Implement the function above
                         var cubemapProp = root.FindPropertyRelative(Variables.m_GenerateCubemap);
                         var seamlessMapProp = root.FindPropertyRelative(Variables.m_SeamlessCubemap);
 
-                        GUIContent l = EditorGUI.BeginProperty(controlRect, TextureImporterSettingsStyles.Mapping, cubemapProp);
+                        var l = EditorGUI.BeginProperty(controlRect, TextureImporterSettingsStyles.Mapping, cubemapProp);
 
                         EditorGUI.showMixedValue = cubemapProp.hasMultipleDifferentValues || seamlessMapProp.hasMultipleDifferentValues;
                         EditorGUI.BeginChangeCheck();
-                        int value = EditorGUI.IntPopup(controlRect, l, cubemapProp.intValue, CubemapOptions, CubemapValues2);
+                        var value = EditorGUI.IntPopup(controlRect, l, cubemapProp.intValue, CubemapOptions, CubemapValues2);
 
                         if (EditorGUI.EndChangeCheck()) {
                             cubemapProp.intValue = value;
@@ -291,14 +267,14 @@ namespace InitialPrefabs.ImportOverrides {
                         using (new IndentScope(1)) {
                             var columnsProp = root.FindPropertyRelative(Variables.m_FlipbookColumns);
                             var rowsProp = root.FindPropertyRelative(Variables.m_FlipbookRows);
-                            EditorGUILayout.PropertyField(columnsProp, TextureImporterSettingsStyles.Columns);
-                            EditorGUILayout.PropertyField(rowsProp, TextureImporterSettingsStyles.Rows);
+                            _ = EditorGUILayout.PropertyField(columnsProp, TextureImporterSettingsStyles.Columns);
+                            _ = EditorGUILayout.PropertyField(rowsProp, TextureImporterSettingsStyles.Rows);
                         }
                         break;
                 }
             }
 
-            bool showAniso = false;
+            var showAniso = false;
 
             switch (textureType) {
                 case TextureImporterType.Default:
@@ -321,7 +297,10 @@ namespace InitialPrefabs.ImportOverrides {
                     HandleCookie(root, ref cookieLightType);
                     break;
                 case TextureImporterType.Lightmap:
+                    HandleLightmap(root);
+                    break;
                 case TextureImporterType.DirectionalLightmap:
+                    break;
                 case TextureImporterType.Shadowmask:
                     break;
                 default:
@@ -345,7 +324,7 @@ namespace InitialPrefabs.ImportOverrides {
             }
 
             if (EditorGUI.EndChangeCheck()) {
-                root.serializedObject.ApplyModifiedProperties();
+                _ = root.serializedObject.ApplyModifiedProperties();
             }
         }
     }

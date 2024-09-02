@@ -12,7 +12,7 @@ namespace InitialPrefabs.ImportOverrides {
                 using (new IndentScope(1)) {
                     var alphaSourceProp = root.FindPropertyRelative(Variables.m_AlphaSource);
 
-                    TextureImporterAlphaSource alphaSource = (TextureImporterAlphaSource)EditorGUILayout.EnumPopup(
+                    var alphaSource = (TextureImporterAlphaSource)EditorGUILayout.EnumPopup(
                         TextureImporterSettingsStyles.AlphaSource,
                         (TextureImporterAlphaSource)alphaSourceProp.intValue);
                     alphaSourceProp.intValue = (int)alphaSource;
@@ -26,6 +26,10 @@ namespace InitialPrefabs.ImportOverrides {
                                     TextureImporterSettingsStyles.AlphaIsTransparency,
                                     alphaIsTransProp.intValue != 0) ? 1 : 0;
                             }
+                            break;
+                        case TextureImporterAlphaSource.FromInput:
+                            break;
+                        case TextureImporterAlphaSource.FromGrayScale:
                             break;
                         default:
                             alphaIsTransProp.intValue = EditorGUILayout.Toggle(
@@ -59,7 +63,7 @@ namespace InitialPrefabs.ImportOverrides {
                     // Do the swizzle here
                     using (new IndentScope(1)) {
                         var swizzleProp = root.FindPropertyRelative(Variables.m_Swizzle);
-                        EditorGUI.BeginProperty(
+                        var _ = EditorGUI.BeginProperty(
                             EditorGUILayout.BeginHorizontal(),
                             TextureImporterSettingsStyles.Swizzle,
                             swizzleProp);
@@ -81,4 +85,3 @@ namespace InitialPrefabs.ImportOverrides {
         }
     }
 }
-
