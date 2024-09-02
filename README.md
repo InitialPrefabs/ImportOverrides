@@ -23,12 +23,12 @@ repository aims to do**.
 It is still the **developer's** responsibility to set up their own Scriptable Import Pipeline. This 
 is **_not an architecture_**, it is **only a GUI frontend** to the `TextureImporterSettings`.
 
-You can use this GUI frontend for all instances of serialized `TextureImporterSettings`. In the 
-demo folder, you can see a Scriptable Object called `Demo`.
+You can use this GUI frontend for all instances of serialized `TextureImporterSettings`.
 
 ## Reference Video
 https://github.com/user-attachments/assets/4beae39d-5f3d-450e-85bd-25ef40803f25
 
+In the  demo folder, you can see a Scriptable Object called `Demo`.
 * The Demo Scriptable Object only has the `TextureImporterSettings` variable. Instead of showing the
 default struct, it shows a GUI similar to `TextureImporterSettings`.
 
