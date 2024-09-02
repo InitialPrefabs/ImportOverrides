@@ -33,7 +33,9 @@ In the  demo folder, you can see a Scriptable Object called `Demo`.
 default struct, it shows a GUI similar to `TextureImporterSettings`.
 
 ## Install
-1. Use openupm
+You have a couple of options to install this package.
+
+1. Use [OpenUPM](https://openupm.com/docs/getting-started.html)
 2. Add this package's git url through the package manager
     - 1. In the toolbar go to Window
     - 2. Select Package Manager
