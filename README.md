@@ -26,8 +26,20 @@ is **_not an architecture_**, it is **only a GUI frontend** to the `TextureImpor
 You can use this GUI frontend for all instances of serialized `TextureImporterSettings`. In the 
 demo folder, you can see a Scriptable Object called `Demo`.
 
+## Reference Video
+https://github.com/user-attachments/assets/4beae39d-5f3d-450e-85bd-25ef40803f25
+
 * The Demo Scriptable Object only has the `TextureImporterSettings` variable. Instead of showing the
 default struct, it shows a GUI similar to `TextureImporterSettings`.
 
-## Reference Video
-https://github.com/user-attachments/assets/4beae39d-5f3d-450e-85bd-25ef40803f25
+## Install
+1. Use openupm
+2. Add this package's git url through the package manager
+    - 1. In the toolbar go to Window
+    - 2. Select Package Manager
+    - 3. Click the `+` sign in the top left corner
+    - 4. Select `Add package from git URL...`
+3. Download the zip and extract `com.initialprefabs.importoverrides` into your project manually.
+
+## Usage
+Use `TextureImporterSettings` normally in your project. Any serialized `TextureImporterSettings` will be displayed with a custom GUI in the inspector.

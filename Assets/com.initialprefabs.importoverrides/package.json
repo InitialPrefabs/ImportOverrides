@@ -1,13 +1,13 @@
 {
     "name": "com.initialprefabs.importoverrides",
-    "version": "1.2.3",
+    "version": "1.0.0",
     "displayName": "Import Overrides",
-    "description": "A visual GUI similar to the default importer UI for assets.",
+    "description": "A visual GUI for Textures similar to the default TextureImporter UI.",
     "unity": "2022.3",
     "unityRelease": "15",
-    "documentationUrl": "https://example.com/",
-    "changelogUrl": "https://example.com/changelog.html",
-    "licensesUrl": "https://example.com/licensing.html",
+    "documentationUrl": "https://github.com/InitialPrefabs/ImportOverrides",
+    "changelogUrl": "https://github.com/InitialPrefabs/ImportOverrides/blob/main/CHANGELOG.md",
+    "licensesUrl": "https://github.com/InitialPrefabs/ImportOverrides/blob/main/LICENSE",
     "dependencies": {
     },
     "keywords": [
@@ -18,6 +18,6 @@
     "author": {
         "name": "InitialPrefabs",
         "email": "info@initialprefabs.com",
-        "url": "https://www.unity3d.com"
+        "url": "https://initialprefabs.com"
     }
 }
