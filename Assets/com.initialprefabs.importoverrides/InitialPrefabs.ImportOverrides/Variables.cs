@@ -62,5 +62,14 @@ namespace InitialPrefabs.ImportOverrides {
         public static readonly string m_WrapU = nameof(m_WrapU);
         public static readonly string m_WrapV = nameof(m_WrapV);
         public static readonly string m_WrapW = nameof(m_WrapW);
+        public static readonly string m_AllowsAlphaSplitting = nameof(m_AllowsAlphaSplitting);
+        public static readonly string m_AndroidETC2FallbackOverride = nameof(m_AndroidETC2FallbackOverride);
+        public static readonly string m_CrunchedCompression = nameof(m_CrunchedCompression);
+        public static readonly string m_ForceMaximumCompressionQuality_BC6H_BC7 = nameof(m_ForceMaximumCompressionQuality_BC6H_BC7);
+        public static readonly string m_IgnorePlatformSupport = nameof(m_IgnorePlatformSupport);
+        public static readonly string m_Name = nameof(m_Name);
+        public static readonly string m_Overridden = nameof(m_Overridden);
+        public static readonly string m_ResizeAlgorithm = nameof(m_ResizeAlgorithm);
+        public static readonly string m_TextureCompression = nameof(m_TextureCompression);
     }
 }
