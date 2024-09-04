@@ -231,53 +231,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    m_AlphaSource: 1
+    m_AlphaSource: 0
     m_MipMapMode: 0
     m_EnableMipMap: 1
     m_FadeOut: 1
-    m_BorderMipMap: 0
+    m_BorderMipMap: 1
     m_MipMapsPreserveCoverage: 1
     m_AlphaTestReferenceValue: 0
     m_MipMapFadeDistanceStart: 2
     m_MipMapFadeDistanceEnd: 7
-    m_ConvertToNormalMap: 0
-    m_HeightScale: 0.254
+    m_ConvertToNormalMap: 1
+    m_HeightScale: 0.25
     m_NormalMapFilter: 0
     m_FlipGreenChannel: 0
     m_Swizzle: 50462976
     m_IsReadable: 1
-    m_StreamingMipmaps: 0
+    m_StreamingMipmaps: 1
     m_StreamingMipmapsPriority: 0
     m_VTOnly: 1
     m_IgnoreMipmapLimit: 0
     m_NPOTScale: 1
     m_sRGBTexture: 1
-    m_SpriteMode: 0
+    m_SpriteMode: 1
     m_SpriteExtrude: 0
     m_SpriteMeshType: 0
-    m_Alignment: 0
+    m_Alignment: 9
     m_SpritePivot: {x: 0, y: 0}
-    m_SpritePixelsToUnits: 0
+    m_SpritePixelsToUnits: 100
     m_SpriteBorder: {x: 0, y: 0, z: 0, w: 0}
-    m_SpriteGenerateFallbackPhysicsShape: 0
-    m_GenerateCubemap: 5
+    m_SpriteGenerateFallbackPhysicsShape: 1
+    m_GenerateCubemap: 6
     m_CubemapConvolution: 2
     m_SeamlessCubemap: 0
     m_AlphaIsTransparency: 0
     m_SpriteTessellationDetail: 0
-    m_TextureType: 1
-    m_TextureShape: 8
+    m_TextureType: 4
+    m_TextureShape: 1
     m_SingleChannelComponent: 0
     m_FlipbookRows: 1
     m_FlipbookColumns: 1
     m_IgnorePngGamma: 0
-    m_CookieMode: 0
+    m_CookieMode: 1
     m_FilterMode: 0
     m_Aniso: 0
     m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
     m_NormalMap: 0
     m_TextureFormat: 0
     m_MaxTextureSize: 0

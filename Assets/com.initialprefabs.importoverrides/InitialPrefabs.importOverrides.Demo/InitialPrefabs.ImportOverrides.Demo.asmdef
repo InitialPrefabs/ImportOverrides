@@ -2,7 +2,9 @@
     "name": "InitialPrefabs.ImportOverrides.Demo",
     "rootNamespace": "InitialPrefabs.ImportOverrides.Demo",
     "references": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
