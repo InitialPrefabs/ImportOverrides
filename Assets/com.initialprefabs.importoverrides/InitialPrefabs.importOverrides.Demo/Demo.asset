@@ -74,3 +74,16 @@ MonoBehaviour:
     m_CompressionQualitySet: 0
     m_TextureFormatSet: 0
     m_ApplyGammaDecoding: 0
+  platformSettings:
+    m_Name: WebGL
+    m_Overridden: 0
+    m_IgnorePlatformSupport: 0
+    m_MaxTextureSize: 2048
+    m_ResizeAlgorithm: 0
+    m_TextureFormat: -1
+    m_TextureCompression: 1
+    m_CompressionQuality: 50
+    m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    m_CrunchedCompression: 0
+    m_AllowsAlphaSplitting: 0
+    m_AndroidETC2FallbackOverride: 0
