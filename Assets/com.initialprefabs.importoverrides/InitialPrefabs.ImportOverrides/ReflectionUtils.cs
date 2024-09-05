@@ -2,6 +2,7 @@
 using System.Reflection;
 
 namespace InitialPrefabs.ImportOverrides {
+
     static class ReflectionUtils {
         public static object Invoke<T>(object target, string method, BindingFlags flags, params object[] args) {
             var type = typeof(T);
@@ -18,22 +19,22 @@ namespace InitialPrefabs.ImportOverrides {
         }
 
         public static object Invoke<T>(
-            object target, 
-            string method, 
-            BindingFlags flags, 
-            Type[] argTypes, 
-            object[] args, 
+            object target,
+            string method,
+            BindingFlags flags,
+            Type[] argTypes,
+            object[] args,
             ParameterModifier[] paramModifiers) {
             return Invoke(typeof(T), target, method, flags, argTypes, args, paramModifiers);
         }
 
         public static object Invoke(
-            Type type, 
-            object target, 
-            string method, 
-            BindingFlags flags, 
-            Type[] argTypes, 
-            object[] args, 
+            Type type,
+            object target,
+            string method,
+            BindingFlags flags,
+            Type[] argTypes,
+            object[] args,
             ParameterModifier[] paramModifiers) {
 
             var methodInfo = type.GetMethod(method, flags, null, argTypes, paramModifiers);
@@ -44,13 +45,13 @@ namespace InitialPrefabs.ImportOverrides {
         }
 
         public static object InvokeGeneric(
-            Type type, 
-            object target, 
-            string method, 
-            BindingFlags flags, 
+            Type type,
+            object target,
+            string method,
+            BindingFlags flags,
             int genericParameterCount,
-            Type[] argTypes, 
-            object[] args, 
+            Type[] argTypes,
+            object[] args,
             ParameterModifier[] paramModifiers) {
 
             var methodInfo = type.GetMethod(method, argTypes.Length, flags, null, argTypes, paramModifiers);
@@ -69,4 +70,3 @@ namespace InitialPrefabs.ImportOverrides {
         }
     }
 }
-

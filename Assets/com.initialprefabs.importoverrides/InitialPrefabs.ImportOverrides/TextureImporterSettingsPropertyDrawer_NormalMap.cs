@@ -34,7 +34,7 @@ namespace InitialPrefabs.ImportOverrides {
         private static void BumpGUI(SerializedProperty root) {
             var generateFromBump = root.FindPropertyRelative(Variables.m_ConvertToNormalMap);
             using var _ = ChangeCheckScope.Begin();
-            ToggleFromInt(generateFromBump, TextureImporterSettingsStyles.GenerateFromBump);
+            CommonEditorGUI.ToggleFromInt(generateFromBump, TextureImporterSettingsStyles.GenerateFromBump);
             using (new IndentScope(1)) {
                 if (generateFromBump.intValue == 0) {
                     return;
@@ -49,7 +49,7 @@ namespace InitialPrefabs.ImportOverrides {
             }
 
             var flipGreenChannelProp = root.FindPropertyRelative(Variables.m_FlipGreenChannel);
-            ToggleFromInt(flipGreenChannelProp, TextureImporterSettingsStyles.FlipGreenChannel);
+            CommonEditorGUI.ToggleFromInt(flipGreenChannelProp, TextureImporterSettingsStyles.FlipGreenChannel);
         }
     }
 }

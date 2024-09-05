@@ -55,63 +55,63 @@ namespace InitialPrefabs.ImportOverrides {
         public static readonly GUIContent Bumpiness = new GUIContent("Bumpiness");
         public static readonly GUIContent BumpFilteringOption = new GUIContent("Filtering");
         public static readonly GUIContent[] BumpFilteringOptions = {
-            EditorGUIUtility.TrTextContent("Sharp"),
-            EditorGUIUtility.TrTextContent("Smooth"),
+            new GUIContent("Sharp"),
+            new GUIContent("Smooth"),
         };
         public static readonly GUIContent FlipGreenChannel = new GUIContent("Flip Green Channel");
 
-        public static readonly GUIContent SpriteMode = EditorGUIUtility.TrTextContent("Sprite Mode");
+        public static readonly GUIContent SpriteMode = new GUIContent("Sprite Mode");
         public static readonly GUIContent[] SpriteModeOptions = {
-            EditorGUIUtility.TrTextContent("Single"),
-            EditorGUIUtility.TrTextContent("Multiple"),
-            EditorGUIUtility.TrTextContent("Polygon"),
+            new GUIContent("Single"),
+            new GUIContent("Multiple"),
+            new GUIContent("Polygon"),
         };
         public static readonly GUIContent[] SpriteMeshTypeOptions = {
-            EditorGUIUtility.TrTextContent("Full Rect"),
-            EditorGUIUtility.TrTextContent("Tight"),
+            new GUIContent("Full Rect"),
+            new GUIContent("Tight"),
         };
 
-        public static readonly GUIContent SpritePixelsPerUnit = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent SpritePixelsPerUnit = new GUIContent(
             "Pixels Per Unit", "How many pixels in the sprite correspond to one unit in the world.");
-        public static readonly GUIContent SpriteExtrude = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent SpriteExtrude = new GUIContent(
             "Extrude Edges", "How much empty area to leave around the sprite in the generated mesh.");
-        public static readonly GUIContent SpriteMeshType = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent SpriteMeshType = new GUIContent(
             "Mesh Type", "Type of sprite mesh to generate.");
-        public static readonly GUIContent SpriteAlignment = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent SpriteAlignment = new GUIContent(
             "Pivot", "Sprite pivot point in its localspace. May be used for syncing animation frames of different sizes.");
         public static readonly GUIContent[] SpriteAlignmentOptions = {
-            EditorGUIUtility.TrTextContent("Center"),
-            EditorGUIUtility.TrTextContent("Top Left"),
-            EditorGUIUtility.TrTextContent("Top"),
-            EditorGUIUtility.TrTextContent("Top Right"),
-            EditorGUIUtility.TrTextContent("Left"),
-            EditorGUIUtility.TrTextContent("Right"),
-            EditorGUIUtility.TrTextContent("Bottom Left"),
-            EditorGUIUtility.TrTextContent("Bottom"),
-            EditorGUIUtility.TrTextContent("Bottom Right"),
-            EditorGUIUtility.TrTextContent("Custom"),
+            new GUIContent("Center"),
+            new GUIContent("Top Left"),
+            new GUIContent("Top"),
+            new GUIContent("Top Right"),
+            new GUIContent("Left"),
+            new GUIContent("Right"),
+            new GUIContent("Bottom Left"),
+            new GUIContent("Bottom"),
+            new GUIContent("Bottom Right"),
+            new GUIContent("Custom"),
         };
-        public static readonly GUIContent spriteGenerateFallbackPhysicsShape = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent spriteGenerateFallbackPhysicsShape = new GUIContent(
             "Generate Physics Shape",
             "Generates a default physics shape from the outline of the Sprite/s when a physics shape " +
             "has not been set in the Sprite Editor.");
-        public static readonly GUIContent applyAndContinueToSpriteEditor = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent applyAndContinueToSpriteEditor = new GUIContent(
             "Unapplied import settings for \'{0}\'.\n Apply changes and continue to Sprite Editor Window?");
         public static readonly GUIContent EmptyContent = new GUIContent(" ");
 
-        public static readonly GUIContent CookieType = EditorGUIUtility.TrTextContent("Light Type");
+        public static readonly GUIContent CookieType = new GUIContent("Light Type");
         public static readonly GUIContent[] CookieOptions = {
-            EditorGUIUtility.TrTextContent("Spot Light"),
-            EditorGUIUtility.TrTextContent("Directional Light"),
-            EditorGUIUtility.TrTextContent("Point Light"),
+            new GUIContent("Spot Light"),
+            new GUIContent("Directional Light"),
+            new GUIContent("Point Light"),
         };
 
-        public static readonly GUIContent SingleChannelComponent = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent SingleChannelComponent = new GUIContent(
             "Channel", "As which color/alpha component the single channel texture is treated.");
         public static readonly GUIContent[] SingleChannelComponentOptions =
         {
-            EditorGUIUtility.TrTextContent("Alpha", "Use the alpha channel (compression not supported)."),
-            EditorGUIUtility.TrTextContent("Red", "Use the red color component."),
+            new GUIContent("Alpha", "Use the alpha channel (compression not supported)."),
+            new GUIContent("Red", "Use the red color component."),
         };
         public static readonly int[] SingleChannelComponentValues =
         {
@@ -119,18 +119,74 @@ namespace InitialPrefabs.ImportOverrides {
             (int)TextureImporterSingleChannelComponent.Red,
         };
 
-        public static readonly GUIContent AlphaSource = EditorGUIUtility.TrTextContent(
+        public static readonly GUIContent AlphaSource = new GUIContent(
             "Alpha Source",
             "How is the alpha generated for the imported texture.");
         public static readonly GUIContent[] AlphaSourceOptions = {
-            EditorGUIUtility.TrTextContent("None", "No Alpha will be used."),
-            EditorGUIUtility.TrTextContent("Input Texture Alpha", "Use Alpha from the input texture if one is provided."),
-            EditorGUIUtility.TrTextContent("From Gray Scale", "Generate Alpha from image gray scale."),
+            new GUIContent("None", "No Alpha will be used."),
+            new GUIContent("Input Texture Alpha", "Use Alpha from the input texture if one is provided."),
+            new GUIContent("From Gray Scale", "Generate Alpha from image gray scale."),
         };
         public static readonly int[] AlphaSourceValues = {
             (int)TextureImporterAlphaSource.None,
             (int)TextureImporterAlphaSource.FromInput,
             (int)TextureImporterAlphaSource.FromGrayScale,
         };
+
+        public static readonly GUIContent OverrideStandalone = new GUIContent("Override For Windows, Mac, Linux");
+        public static readonly GUIContent OverrideServer = new GUIContent("Override for Server");
+        public static readonly GUIContent OverrideIOS = new GUIContent("Override For iOS");
+        public static readonly GUIContent OverrideAndroid = new GUIContent("Override For Android");
+        public static readonly GUIContent OverrideWebGL = new GUIContent("Override For WebGL");
+        public static readonly GUIContent OverrideWindowsStoreApp = new GUIContent("Override For Windows Store App");
+        public static readonly GUIContent OverridePS4 = new GUIContent("Override For PlayStation");
+        public static readonly GUIContent OverrideXbox = new GUIContent("Override For Xbox One");
+        public static readonly GUIContent OverrideForTVOs = new GUIContent("Override for Tv OS");
+        public static readonly GUIContent OverrideForVisionOS = new GUIContent("Override for Vision OS");
+        public static readonly GUIContent OverrideForNintendoSwitch = new GUIContent("Override for Nintendo Switch");
+        public static readonly GUIContent OverrideForStadia = new GUIContent("Override for Stadia");
+        public static readonly GUIContent OverrideForLinuxHeadlessSimulation = new GUIContent("Override for Linux Headless Simulation");
+        public static readonly GUIContent OverrideForEmbeddedLinux = new GUIContent("Override for Embedded Linux");
+        public static readonly GUIContent OverrideForQNX = new GUIContent("Override for QNX");
+        public static readonly GUIContent MaxSize = new GUIContent("Max Size", "Textures larger than this will be scaled down.");
+
+        public static readonly GUIContent ResizeAlgorithm = new GUIContent(
+            "Resize Algorithm",
+            "Select algorithm to apply for textures when scaled down.");
+
+        public static readonly GUIContent Format = new GUIContent(
+            "Format",
+            "Please refer to the docs: https://docs.unity3d.com/Manual/class-TextureImporterOverride.html");
+        public static readonly GUIContent Compression = new GUIContent("Compression",
+            "How will the textures be compressed?");
+        public static readonly GUIContent UseCrunchCompression = new GUIContent("Use Crunch Compression",
+            "Texture is crunched compressed to save space on the disk when available.");
+        public static readonly GUIContent CompressorQuality = new GUIContent("Compressor Quality",
+            "Use the slider to adjust compression quality from 0 (Fastest) to 100 (Best).");
+
+        public static readonly GUIContent[] TextureCompressionOptions = {
+            new GUIContent("None", "Texture is not compressed."),
+            new GUIContent("Low Quality", "Texture compressed with low quality but high performance, high compression format."),
+            new GUIContent("Normal Quality", "Texture is compressed with a standard format."),
+            new GUIContent("High Quality", "Texture compressed with a high quality format."),
+        };
+
+        public static readonly int[] TextureCompressionValues = {
+            (int)TextureImporterCompression.Uncompressed,
+            (int)TextureImporterCompression.CompressedLQ,
+            (int)TextureImporterCompression.Compressed,
+            (int)TextureImporterCompression.CompressedHQ
+        };
+
+        public static readonly GUIContent TextureFormatHelp = new GUIContent(
+            "Texture Format Info",
+            "Follow the link to Unity's official LTS documentation on texture formats per platform.");
+
+        public static readonly GUIContent IgnorePlatformSupport = new GUIContent(
+            "Ignore Platform Support",
+            "By default, `TextureGenerator` checks if the active build target supports the " +
+            "selected texture format. If you enable this property, `TextureGenerator` ignores " +
+            "that check, and allows you to generate texture data in any format regardless of the " +
+            "currently active build target.");
     }
 }

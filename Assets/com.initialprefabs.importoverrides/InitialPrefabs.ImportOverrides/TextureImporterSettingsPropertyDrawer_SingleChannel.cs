@@ -26,7 +26,7 @@ namespace InitialPrefabs.ImportOverrides {
                     (TextureImporterAlphaSource)alphaSource.intValue != TextureImporterAlphaSource.None;
                 using (new GUIScope(!showAlphaIsTransparency)) {
                     var alphaIsTranparency = root.FindPropertyRelative(Variables.m_AlphaIsTransparency);
-                    ToggleFromInt(alphaIsTranparency, TextureImporterSettingsStyles.AlphaIsTransparency);
+                    CommonEditorGUI.ToggleFromInt(alphaIsTranparency, TextureImporterSettingsStyles.AlphaIsTransparency);
                 }
             }
             EditorGUILayout.Space();

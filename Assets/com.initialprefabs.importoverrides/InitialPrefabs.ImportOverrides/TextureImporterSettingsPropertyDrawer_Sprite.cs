@@ -147,7 +147,9 @@ namespace InitialPrefabs.ImportOverrides {
             }
 
             if (spriteMode.intValue != (int)SpriteImportMode.Polygon) {
-                ToggleFromInt(spriteGenerateFallbackPhysicsShape, TextureImporterSettingsStyles.spriteGenerateFallbackPhysicsShape);
+                CommonEditorGUI.ToggleFromInt(
+                    spriteGenerateFallbackPhysicsShape,
+                    TextureImporterSettingsStyles.spriteGenerateFallbackPhysicsShape);
             }
 
             EditorGUI.indentLevel--;

@@ -191,19 +191,6 @@ namespace InitialPrefabs.ImportOverrides {
             }
         }
 
-        private static void ToggleFromInt(SerializedProperty property, GUIContent label) {
-            var content = EditorGUI.BeginProperty(EditorGUILayout.BeginHorizontal(), label, property);
-            EditorGUI.BeginChangeCheck();
-            EditorGUI.showMixedValue = property.hasMultipleDifferentValues;
-            var value = EditorGUILayout.Toggle(content, property.intValue > 0) ? 1 : 0;
-            EditorGUI.showMixedValue = false;
-            if (EditorGUI.EndChangeCheck()) {
-                property.intValue = value;
-            }
-            EditorGUILayout.EndHorizontal();
-            EditorGUI.EndProperty();
-        }
-
         private bool showSettings;
 
         // TODO: For TextureImporterPlatformSettings use the BuildTargetGroup API
@@ -266,7 +253,7 @@ namespace InitialPrefabs.ImportOverrides {
                                 CubemapConvolutionOptions,
                                 CubemapConvolutionValues,
                                 CubemapConvolution);
-                            ToggleFromInt(seamlessMapProp, TextureImporterSettingsStyles.FixupEdgeSeams);
+                            CommonEditorGUI.ToggleFromInt(seamlessMapProp, TextureImporterSettingsStyles.FixupEdgeSeams);
                         }
                         EditorGUILayout.Space();
                         break;
