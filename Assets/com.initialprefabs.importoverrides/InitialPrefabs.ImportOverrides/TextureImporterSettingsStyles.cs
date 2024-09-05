@@ -170,7 +170,6 @@ namespace InitialPrefabs.ImportOverrides {
             new GUIContent("Normal Quality", "Texture is compressed with a standard format."),
             new GUIContent("High Quality", "Texture compressed with a high quality format."),
         };
-
         public static readonly int[] TextureCompressionValues = {
             (int)TextureImporterCompression.Uncompressed,
             (int)TextureImporterCompression.CompressedLQ,
@@ -181,12 +180,20 @@ namespace InitialPrefabs.ImportOverrides {
         public static readonly GUIContent TextureFormatHelp = new GUIContent(
             "Texture Format Info",
             "Follow the link to Unity's official LTS documentation on texture formats per platform.");
-
         public static readonly GUIContent IgnorePlatformSupport = new GUIContent(
             "Ignore Platform Support",
             "By default, `TextureGenerator` checks if the active build target supports the " +
             "selected texture format. If you enable this property, `TextureGenerator` ignores " +
             "that check, and allows you to generate texture data in any format regardless of the " +
             "currently active build target.");
+        public static readonly GUIContent AllowAlphaSplitting = new GUIContent("Allow Alpha Splitting",
+            "Allows Alpha splitting on the imported texture when needed (for example ETC1 compression " +
+            "for textures with transparency).");
+        public static readonly GUIContent ETC2AndroidFallbackOverride = new GUIContent(
+            "Android ETC2 Fallback Override",
+            "This enumeration has values for different qualities to decompress an ETC2" +
+            " texture on Android devices that don't support the ETC2 texture format.");
+        public static readonly GUIContent AdditionalOptions = new GUIContent("Additional Options");
+        public static readonly GUIContent HelpfulLinks = new GUIContent("Helpful Links");
     }
 }

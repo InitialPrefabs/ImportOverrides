@@ -19,11 +19,28 @@ Provide a GUI similar to Unity's `TextureImporter`. This allows the `TextureImpo
 feel more familiar and allows developers to set up their pipeline visually. **That is what this 
 repository aims to do**.
 
+![import-overrides](import-overrides.png)
+On the left side of the screenshot is Unity's default TextureImporter. The right side of the screenshot
+aims to replicate that same GUI but for the `TextureImporterSettings` and `TextureImporterPlatformSettings`
+structs.
+
 ## What this plugin does not do
 It is still the **developer's** responsibility to set up their own Scriptable Import Pipeline. This 
 is **_not an architecture_**, it is **only a GUI frontend** to the `TextureImporterSettings`.
 
 You can use this GUI frontend for all instances of serialized `TextureImporterSettings`.
+
+## Usage
+Use `TextureImporterSettings` normally in your project. Any serialized `TextureImporterSettings` will be displayed with a custom 
+GUI in the inspector. When writing your custom importer, use the following APIs:
+
+* [TextureImporter.SetTextureSettings](https://docs.unity3d.com/ScriptReference/TextureImporter.SetTextureSettings.html)
+* [TextureImporter.SetTexturePlatformSettings](https://docs.unity3d.com/ScriptReference/TextureImporter.SetPlatformTextureSettings.html)
+
+You can also use the `TextureImporter`'s API to copy to the structs first if you want to use some of Unity's default per **import session**.
+## Limitations
+Mipmap Limit Groups are not embedded in `TextureImporterSettings`, so the GUI does not display an override for that. Your 
+Scriptable Import Pipeline should handle it.
 
 ## Reference Video
 https://github.com/user-attachments/assets/4beae39d-5f3d-450e-85bd-25ef40803f25
@@ -42,6 +59,3 @@ You have a couple of options to install this package.
     - 3. Click the `+` sign in the top left corner
     - 4. Select `Add package from git URL...`
 3. Download the zip and extract `com.initialprefabs.importoverrides` into your project manually.
-
-## Usage
-Use `TextureImporterSettings` normally in your project. Any serialized `TextureImporterSettings` will be displayed with a custom GUI in the inspector.

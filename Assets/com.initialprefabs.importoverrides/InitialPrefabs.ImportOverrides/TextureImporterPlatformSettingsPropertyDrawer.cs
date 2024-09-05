@@ -108,16 +108,29 @@ namespace InitialPrefabs.ImportOverrides {
                                 100);
                         }
                     }
-                }
 
-                EditorGUILayout.Space();
-                if (EditorGUILayout.LinkButton(TextureImporterSettingsStyles.TextureFormatHelp)) {
-                    Application.OpenURL("https://docs.unity3d.com/Manual/class-TextureImporterOverride.html#recommended-formats");
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField(TextureImporterSettingsStyles.AdditionalOptions, EditorStyles.boldLabel);
+                    var allowAlphaSplitting = root.FindPropertyRelative(Variables.m_AllowsAlphaSplitting);
+                    CommonEditorGUI.ToggleFromInt(allowAlphaSplitting, TextureImporterSettingsStyles.AllowAlphaSplitting);
+
+                    if (target == KnownBuildTargets.Android) {
+                        var fallback = root.FindPropertyRelative(Variables.m_AndroidETC2FallbackOverride);
+                        fallback.intValue = (int)(AndroidETC2FallbackOverride)EditorGUILayout.EnumPopup(
+                            TextureImporterSettingsStyles.ETC2AndroidFallbackOverride,
+                            (AndroidETC2FallbackOverride)fallback.intValue);
+                    }
                 }
 
                 if (EditorGUI.EndChangeCheck()) {
                     _ = root.serializedObject.ApplyModifiedProperties();
                 }
+            }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(TextureImporterSettingsStyles.HelpfulLinks, EditorStyles.boldLabel);
+            if (EditorGUILayout.LinkButton(TextureImporterSettingsStyles.TextureFormatHelp)) {
+                Application.OpenURL("https://docs.unity3d.com/Manual/class-TextureImporterOverride.html#recommended-formats");
             }
         }
     }
