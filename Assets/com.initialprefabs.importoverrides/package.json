@@ -1,6 +1,6 @@
 {
     "name": "com.initialprefabs.importoverrides",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "displayName": "Import Overrides",
     "description": "A visual GUI for Textures similar to the default TextureImporter UI.",
     "unity": "2022.3",
