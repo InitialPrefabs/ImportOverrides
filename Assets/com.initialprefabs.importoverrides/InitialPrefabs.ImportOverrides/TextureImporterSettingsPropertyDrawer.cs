@@ -202,6 +202,8 @@ namespace InitialPrefabs.ImportOverrides {
                 return;
             }
 
+            using var _indent = new IndentScope(1);
+
             EditorGUI.BeginChangeCheck();
             root.serializedObject.Update();
 

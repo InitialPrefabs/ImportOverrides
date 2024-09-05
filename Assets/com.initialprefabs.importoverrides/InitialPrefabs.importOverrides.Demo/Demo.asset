@@ -54,8 +54,8 @@ MonoBehaviour:
     m_FlipbookColumns: 0
     m_IgnorePngGamma: 0
     m_CookieMode: 0
-    m_FilterMode: 0
-    m_Aniso: 0
+    m_FilterMode: 2
+    m_Aniso: 5
     m_MipBias: 0
     m_WrapU: 0
     m_WrapV: 0
@@ -75,15 +75,15 @@ MonoBehaviour:
     m_TextureFormatSet: 0
     m_ApplyGammaDecoding: 0
   platformSettings:
-    m_Name: WebGL
-    m_Overridden: 0
-    m_IgnorePlatformSupport: 0
-    m_MaxTextureSize: 2048
+    m_Name: Standalone
+    m_Overridden: 1
+    m_IgnorePlatformSupport: 1
+    m_MaxTextureSize: 32
     m_ResizeAlgorithm: 0
-    m_TextureFormat: -1
-    m_TextureCompression: 1
-    m_CompressionQuality: 50
+    m_TextureFormat: 12
+    m_TextureCompression: 3
+    m_CompressionQuality: 100
     m_ForceMaximumCompressionQuality_BC6H_BC7: 0
-    m_CrunchedCompression: 0
+    m_CrunchedCompression: 1
     m_AllowsAlphaSplitting: 0
     m_AndroidETC2FallbackOverride: 0
